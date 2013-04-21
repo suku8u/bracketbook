@@ -41,9 +41,17 @@ class BracketsController < ApplicationController
   # POST /brackets.json
   def create
     @bracket = Bracket.new(params[:bracket])
+    #raise params[:bracket][:bracket_teams].inspect
+    bracket_teams = params[:bracket][:bracket_teams].split(/\r?\n/)
+    #raise bracket_teams.inspect
 
     respond_to do |format|
       if @bracket.save
+        bracket_teams.each do |t|
+          team = @bracket.teams.build
+          team.name = t
+          team.save
+        end
         format.html { redirect_to @bracket, notice: 'Bracket was successfully created.' }
         format.json { render json: @bracket, status: :created, location: @bracket }
       else

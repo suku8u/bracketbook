@@ -1,5 +1,8 @@
 Tournament::Application.routes.draw do
-  resources :brackets
+
+  resources :brackets do
+    resources :teams
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

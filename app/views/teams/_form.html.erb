@@ -1,10 +1,10 @@
-<%= form_for(@bracket) do |f| %>
-  <% if @bracket.errors.any? %>
+<%= form_for(@team) do |f| %>
+  <% if @team.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@bracket.errors.count, "error") %> prohibited this bracket from being saved:</h2>
+      <h2><%= pluralize(@team.errors.count, "error") %> prohibited this team from being saved:</h2>
 
       <ul>
-      <% @bracket.errors.full_messages.each do |msg| %>
+      <% @team.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -16,8 +16,8 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :bracket_teams %>
-    <%= f.text_area :bracket_teams %>
+    <%= f.label :bracket %><br />
+    <%= f.text_field :bracket %>
   </div>
   <div class="actions">
     <%= f.submit %>
