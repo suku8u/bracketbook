@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130421051646) do
+ActiveRecord::Schema.define(:version => 20130421062606) do
 
   create_table "brackets", :force => true do |t|
     t.string   "name"
@@ -20,16 +20,16 @@ ActiveRecord::Schema.define(:version => 20130421051646) do
   end
 
   create_table "matches", :force => true do |t|
-    t.integer  "tournament_id"
-    t.string   "seed1"
-    t.string   "seed2"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-    t.integer  "seed1_score"
-    t.integer  "seed2_score"
+    t.integer  "team1_id"
+    t.integer  "team2_id"
+    t.integer  "team1_score"
+    t.integer  "team2_score"
+    t.integer  "bracket_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
-  add_index "matches", ["tournament_id"], :name => "index_matches_on_tournament_id"
+  add_index "matches", ["bracket_id"], :name => "index_matches_on_bracket_id"
 
   create_table "teams", :force => true do |t|
     t.string   "name"
@@ -39,11 +39,5 @@ ActiveRecord::Schema.define(:version => 20130421051646) do
   end
 
   add_index "teams", ["bracket_id"], :name => "index_teams_on_bracket_id"
-
-  create_table "tournaments", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
 
 end

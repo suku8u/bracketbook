@@ -47,11 +47,16 @@ class BracketsController < ApplicationController
 
     respond_to do |format|
       if @bracket.save
+        # save teams to bracket
         bracket_teams.each do |t|
           team = @bracket.teams.build
           team.name = t
           team.save
         end
+
+        # generate matches for this bracket
+
+
         format.html { redirect_to @bracket, notice: 'Bracket was successfully created.' }
         format.json { render json: @bracket, status: :created, location: @bracket }
       else

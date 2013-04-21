@@ -2,6 +2,7 @@ Tournament::Application.routes.draw do
 
   resources :brackets do
     resources :teams
+    resources :matches
   end
 
   # The priority is based upon order of creation:
