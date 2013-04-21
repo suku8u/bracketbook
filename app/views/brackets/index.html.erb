@@ -1,0 +1,23 @@
+<h1>Listing brackets</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @brackets.each do |bracket| %>
+  <tr>
+    <td><%= bracket.name %></td>
+    <td><%= link_to 'Show', bracket %></td>
+    <td><%= link_to 'Edit', edit_bracket_path(bracket) %></td>
+    <td><%= link_to 'Destroy', bracket, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Bracket', new_bracket_path %>
