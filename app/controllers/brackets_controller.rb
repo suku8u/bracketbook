@@ -54,7 +54,30 @@ class BracketsController < ApplicationController
           team.save
         end
 
-        # generate matches for this bracket
+        # generate correct number of matches for this bracket
+        case @bracket.teams.count
+        when 2..4 then num_matches = 2
+        when 5..8 then num_matches = 4
+        when 8..16 then num_matches = 8
+        when 16..32 then num_matches = 16
+        else num_matches = 0
+        end
+
+        num_matches.times.each do
+          match = @bracket.matches.build
+          match.save
+        end
+
+        matches = @bracket.matches
+        counter = 0
+
+        # insert two teams into each match
+        @bracket.teams.each_slice(2) do |two_teams|
+          matches[counter].team1_id = two_teams[0].id
+          matches[counter].team2_id = two_teams[1].id
+          matches[counter].save
+          counter += 1
+        end
 
 
         format.html { redirect_to @bracket, notice: 'Bracket was successfully created.' }

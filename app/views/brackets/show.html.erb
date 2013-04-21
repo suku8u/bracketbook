@@ -5,10 +5,20 @@
   <%= @bracket.name %>
 </p>
 
+<h2>Teams</h2>
 <ul id="teams">
   <% @bracket.teams.each do |team| %>
     <li>
       <%= team.name %>
+    </li>
+  <% end %>
+</ul>
+
+<h2>Matches</h2>
+<ul id="matches">
+  <% @bracket.matches.each do |match| %>
+    <li>
+      <%= Team.find_by_id(match.team1_id).name %> vs <%= Team.find_by_id(match.team2_id).name %>
     </li>
   <% end %>
 </ul>
