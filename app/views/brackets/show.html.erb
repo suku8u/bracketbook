@@ -17,9 +17,11 @@
 <h2>Matches</h2>
 <ul id="matches">
   <% @bracket.matches.each do |match| %>
-    <li>
-      <%= Team.find_by_id(match.team1_id).name %> vs <%= Team.find_by_id(match.team2_id).name %>
-    </li>
+    <% if not match.team1_id.nil? and not match.team2_id.nil? %>
+      <li>
+        <%= Team.find_by_id(match.team1_id).name %> vs <%= Team.find_by_id(match.team2_id).name %>
+      </li>
+    <% end %>
   <% end %>
 </ul>
 
