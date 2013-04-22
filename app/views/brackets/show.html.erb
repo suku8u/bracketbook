@@ -20,6 +20,9 @@
     <% if not match.team1_id.nil? and not match.team2_id.nil? %>
       <li>
         <%= Team.find_by_id(match.team1_id).name %> vs <%= Team.find_by_id(match.team2_id).name %>
+          score: <%= match.team1_score %> vs <%= match.team2_score %>
+
+         <%= link_to "edit", edit_bracket_match_path(match) %>
       </li>
     <% end %>
   <% end %>

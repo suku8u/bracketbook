@@ -34,7 +34,8 @@ class MatchesController < ApplicationController
 
   # GET /matches/1/edit
   def edit
-    @match = Match.find(params[:id])
+    @bracket = Bracket.find(params[:id])
+    @match = @bracket.matches.find(params[:bracket_id])
   end
 
   # POST /matches
@@ -56,11 +57,12 @@ class MatchesController < ApplicationController
   # PUT /matches/1
   # PUT /matches/1.json
   def update
-    @match = Match.find(params[:id])
+    @bracket = Bracket.find(params[:bracket_id])
+    @match = @bracket.matches.find(params[:id])
 
     respond_to do |format|
       if @match.update_attributes(params[:match])
-        format.html { redirect_to @match, notice: 'Match was successfully updated.' }
+        format.html { redirect_to @bracket, notice: 'Match was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

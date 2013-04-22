@@ -1,4 +1,4 @@
-<%= form_for(@match) do |f| %>
+<%= form_for [@bracket, @match] do |f| %>
   <% if @match.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@match.errors.count, "error") %> prohibited this match from being saved:</h2>
@@ -12,12 +12,10 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :team1_id %><br />
-    <%= f.number_field :team1_id %>
+    <%= Team.find_by_id(@match.team1_id).name %>
   </div>
   <div class="field">
-    <%= f.label :team2_id %><br />
-    <%= f.number_field :team2_id %>
+    <%= Team.find_by_id(@match.team2_id).name %>
   </div>
   <div class="field">
     <%= f.label :team1_score %><br />
@@ -26,10 +24,6 @@
   <div class="field">
     <%= f.label :team2_score %><br />
     <%= f.number_field :team2_score %>
-  </div>
-  <div class="field">
-    <%= f.label :bracket %><br />
-    <%= f.text_field :bracket %>
   </div>
   <div class="actions">
     <%= f.submit %>
