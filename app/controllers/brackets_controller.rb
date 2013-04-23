@@ -23,7 +23,7 @@ class BracketsController < ApplicationController
       edit_path = ""
 
       team1_name = Team.find_by_id(match.team1_id).name unless match.team1_id.nil?
-      team2_name = Team.find_by_id(match.team2_id).name unless match.team1_id.nil?
+      team2_name = Team.find_by_id(match.team2_id).name unless match.team2_id.nil?
       team1_score = match.team1_score unless match.team1_score.nil?
       team2_score = match.team2_score unless match.team2_score.nil?
       edit_path = edit_bracket_match_path(match) unless match.team1_id.nil? || match.team2_id.nil?
@@ -92,8 +92,11 @@ class BracketsController < ApplicationController
 
         half_num_matches = num_matches / 2
 
+        bracket_position_counter = 0
         num_matches.times do
+          bracket_position_counter += 1
           match = @bracket.matches.build
+          match.bracket_position = bracket_position_counter
           match.save
         end
 

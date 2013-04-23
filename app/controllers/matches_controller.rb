@@ -59,9 +59,28 @@ class MatchesController < ApplicationController
   def update
     @bracket = Bracket.find(params[:bracket_id])
     @match = @bracket.matches.find(params[:id])
+    next_match = @bracket.matches.find(@match.next_match_id)
+    is_odd_match = @match.bracket_position.odd?
+    winning_team_id = nil
 
     respond_to do |format|
       if @match.update_attributes(params[:match])
+
+        if @match.team1_score > @match.team2_score
+          winning_team_id = @match.team1_id
+        elsif @match.team2_score > @match.team1_score
+          winning_team_id = @match.team2_id
+        end
+
+        unless winning_team_id.nil?
+          if is_odd_match
+            next_match.team1_id = winning_team_id
+          else
+            next_match.team2_id = winning_team_id
+          end
+          next_match.save
+        end
+
         format.html { redirect_to @bracket, notice: 'Match was successfully updated.' }
         format.json { head :no_content }
       else
