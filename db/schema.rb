@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130421062606) do
+ActiveRecord::Schema.define(:version => 20130423042857) do
 
   create_table "brackets", :force => true do |t|
     t.string   "name"
@@ -25,8 +25,9 @@ ActiveRecord::Schema.define(:version => 20130421062606) do
     t.integer  "team1_score"
     t.integer  "team2_score"
     t.integer  "bracket_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "next_match_id"
   end
 
   add_index "matches", ["bracket_id"], :name => "index_matches_on_bracket_id"
