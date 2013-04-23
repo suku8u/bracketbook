@@ -15,19 +15,30 @@
 </ul>
 
 <h2>Matches</h2>
-<ul id="matches">
-  <% @bracket.matches.each do |match| %>
-    <% if not match.team1_id.nil? and not match.team2_id.nil? %>
-      <li>
-        <%= Team.find_by_id(match.team1_id).name %> vs <%= Team.find_by_id(match.team2_id).name %>
-          score: <%= match.team1_score %> vs <%= match.team2_score %>
-
-         <%= link_to "edit", edit_bracket_match_path(match) %>
-      </li>
-    <% end %>
+<table id="matches" border="1" padding="5">
+  <tr>
+    <th>Match</th>
+    <th>Team 1 Name</th>
+    <th>Team 2 Name</th>
+    <th>Team 1 Score</th>
+    <th>Team 2 Score</th>
+    <th>Update Score</th>
+  </tr>
+  <% @matches.each_with_index do |m, i| %>
+    <tr>
+      <td><%= i+1 %></td>
+      <td><%= m[:team1_name] %></td>
+      <td><%= m[:team2_name] %></td>
+      <td><%= m[:team1_score] %></td>
+      <td><%= m[:team2_score] %></td>
+      <td>
+        <% if not m[:edit_path].blank? %>
+          <%= link_to "edit", m[:edit_path] %>
+        <% end %>
+      </td>
+    </tr>
   <% end %>
-</ul>
+</table>
 
 
-<%= link_to 'Edit', edit_bracket_path(@bracket) %> |
 <%= link_to 'Back', brackets_path %>

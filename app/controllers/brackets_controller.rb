@@ -15,6 +15,28 @@ class BracketsController < ApplicationController
   def show
     @bracket = Bracket.find(params[:id])
 
+    @matches = @bracket.matches.map do |match|
+      team1_name = "?"
+      team2_name = "?"
+      team1_score = "?"
+      team2_score = "?"
+      edit_path = ""
+
+      team1_name = Team.find_by_id(match.team1_id).name unless match.team1_id.nil?
+      team2_name = Team.find_by_id(match.team2_id).name unless match.team1_id.nil?
+      team1_score = match.team1_score unless match.team1_score.nil?
+      team2_score = match.team2_score unless match.team2_score.nil?
+      edit_path = edit_bracket_match_path(match) unless match.team1_id.nil? || match.team2_id.nil?
+
+      {
+        team1_name: team1_name,
+        team2_name: team2_name,
+        team1_score: team1_score,
+        team2_score: team2_score,
+        edit_path: edit_path
+      }
+    end
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @bracket }
