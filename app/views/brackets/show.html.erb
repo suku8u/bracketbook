@@ -39,26 +39,31 @@
     </tr>
   <% end %>
 </table>
-
+<% bracket_height = 20 %>
+<% bracket_top_margin_offset = 10 %>
 <% @matches_in_each_round.each_with_index do |num_matches, index| %>
-  <h2>Round <%= index + 1 %></h2>
-  <table>
+  <% bracket_height = bracket_height * 2 %>
+  <% bracket_top_margin_offset = bracket_top_margin_offset * 2 %>
+  <div style="height:auto; width: 200px; float:left; margin-top:-<%= bracket_top_margin_offset %>px">
     <% num_matches.times do %>
       <% m = @matches.shift %>
-      <tr>
-        <td><%= m[:team1_name] %></td>
-        <td><%= m[:team2_name] %></td>
-        <td><%= m[:team1_score] %></td>
-        <td><%= m[:team2_score] %></td>
-        <td>
+      <div style="width:200px; height:<%= bracket_height %>px; position:relative;">
+        <div style="position:absolute; bottom:0; left:20px;">
+          <%= m[:team1_name] %> (<%= m[:team1_score] %>)
+        </div>
+      </div>
+      <div style="width:200px; height:<%= bracket_height %>px; border:2px solid black; border-left:none; position:relative;">
+        <div style="position:absolute; bottom:0; left:20px;">
+          <%= m[:team2_name] %> (<%= m[:team2_score] %>)
+        </div>
+        <div style="position:absolute; top:0; right:20px;">
           <% if not m[:edit_path].blank? %>
             <%= link_to "edit", m[:edit_path] %>
           <% end %>
-        </td>
-      </tr>
+        </div>
+      </div>
     <% end %>
-  </table>
-
+  </div>
 <% end %>
 
 <%= link_to 'Back', brackets_path %>
