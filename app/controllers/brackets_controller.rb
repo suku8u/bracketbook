@@ -14,8 +14,15 @@ class BracketsController < ApplicationController
   # GET /brackets/1.json
   def show
     @bracket = Bracket.find(params[:id])
+    matches = @bracket.matches
+    num_matches = @bracket.matches.count
+    @matches_in_each_round = []
+    while num_matches > 0
+      num_matches = num_matches / 2
+      @matches_in_each_round << num_matches if num_matches > 0
+    end
 
-    @matches = @bracket.matches.map do |match|
+    @matches = matches.map do |match|
       team1_name = "?"
       team2_name = "?"
       team1_score = "?"

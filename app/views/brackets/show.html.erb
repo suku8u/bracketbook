@@ -40,5 +40,25 @@
   <% end %>
 </table>
 
+<% @matches_in_each_round.each_with_index do |num_matches, index| %>
+  <h2>Round <%= index + 1 %></h2>
+  <table>
+    <% num_matches.times do %>
+      <% m = @matches.shift %>
+      <tr>
+        <td><%= m[:team1_name] %></td>
+        <td><%= m[:team2_name] %></td>
+        <td><%= m[:team1_score] %></td>
+        <td><%= m[:team2_score] %></td>
+        <td>
+          <% if not m[:edit_path].blank? %>
+            <%= link_to "edit", m[:edit_path] %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+<% end %>
 
 <%= link_to 'Back', brackets_path %>
