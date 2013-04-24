@@ -66,4 +66,16 @@
   </div>
 <% end %>
 
+  <% bracket_top_margin_offset = bracket_top_margin_offset * 2 %>
+  <div style="height:auto; width:200px; float:left; border-bottom:2px solid black; position:relative; top:<%= bracket_top_margin_offset %>px; padding-left:20px;">
+    <% m = @matches.shift %>
+    <% if m[:team1_name] != "?" %>
+      <%= m[:team1_name] %>
+    <% elsif m[:team2_name] != "?" %>
+      <%= m[:team2_name] %>
+    <% else %>
+      ?
+    <% end %>
+  </div>
+
 <%= link_to 'Back', brackets_path %>
