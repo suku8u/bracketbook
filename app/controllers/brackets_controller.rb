@@ -169,4 +169,8 @@ class BracketsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def generator
+    @bracket = Bracket.new
+  end
 end

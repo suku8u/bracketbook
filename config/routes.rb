@@ -1,8 +1,16 @@
 Tournament::Application.routes.draw do
 
+  root to: 'info#home'
+
+  get 'brackets/generator', :to => 'brackets#generator'
+
   resources :brackets do
     resources :teams
     resources :matches
+  end
+
+  %w[about contact].each do |page|
+    get page, controller: "info", action: page
   end
 
   # The priority is based upon order of creation:

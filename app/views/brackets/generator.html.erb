@@ -1,0 +1,27 @@
+<h1>Bracket Generator</h1>
+
+<%= form_for(@bracket) do |f| %>
+  <% if @bracket.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@bracket.errors.count, "error") %> prohibited this bracket from being saved:</h2>
+
+      <ul>
+      <% @bracket.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :bracket_teams %>
+    <%= f.text_area :bracket_teams %>
+  </div>
+  <div class="actions">
+    <%= f.submit :class => 'btn btn-primary' %>
+  </div>
+<% end %>
