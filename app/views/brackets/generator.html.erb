@@ -18,10 +18,14 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :bracket_teams %>
-    <%= f.text_area :bracket_teams %>
+    <%= f.label :bracket_teams, "Teams" %>
+    <%= f.text_area :bracket_teams, value: "a\nb\nc\nd" %>
   </div>
   <div class="actions">
     <%= f.submit :class => 'btn btn-primary' %>
   </div>
 <% end %>
+
+<div id="bracket-box">
+
+</div>
