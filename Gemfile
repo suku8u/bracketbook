@@ -38,15 +38,15 @@ gem 'jquery-rails'
 group :test, :development do
   gem 'rspec-rails', '~> 2.11'
   gem 'sqlite3'
+  gem 'pry'
+  gem 'pry-rails'
+  gem 'pry-doc'
+  gem 'hirb'
 end
 
 group :test do
   gem 'capybara', '1.1.2'
   gem 'factory_girl', '2.6.4'
-end
-
-group :development do
-  gem 'pry'
 end
 
 group :production do
