@@ -2,6 +2,11 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+INITIAL_BRACKET_HEIGHT = 20
+INITIAL_BRACKET_TOP_MARGIN_OFFSET = 10
+INITIAL_MATCH_TOP_MARGIN_OFFSET = -2
+BRACKET_WIDTH = 150
+
 jQuery ->
   $('#new_bracket input[type=submit].btn').bind 'click', (event) =>
     # prevent default event
@@ -24,31 +29,26 @@ jQuery ->
       when num_teams <= 32 then 32
       else 0
 
+
     # call initialize_matches
     matches = initialize_matches num_matches
 
     # insert two teams into each match
     for m in matches
-      m.team1 = bracket_team_names[_i*2]
-      m.team2 = bracket_team_names[_i*2+1]
+      if bracket_team_names[_i * 2] != undefined
+        m.team1 = bracket_team_names[_i * 2]
+      else
+        m.team1 = ""
+      if bracket_team_names[_i * 2 + 1] != undefined
+        m.team2 = bracket_team_names[_i * 2 + 1]
+      else
+        m.team2 = ""
 
-    $('#bracket-box').append(generate_bracket(matches))
-
-    # testing
-    console.log("bracket_team_names")
-    console.log(bracket_team_names)
-    console.log("num_teams")
-    console.log(num_teams)
-    console.log("num_matches")
-    console.log(num_matches)
-    console.log("matches")
-    console.log(matches)
-    console.log("render_match")
-    console.log(matches[0].render_match())
+    $('#bracket-box').append(render_bracket(matches))
 
 # Match class
 class Match
-  constructor: (@team1, @team2) ->
+  constructor: (@team1 = "?", @team2 = "?") ->
 
   render_match: ->
     "#{@team1} vs #{@team2}"
@@ -56,32 +56,79 @@ class Match
 # initialize match objects function
 initialize_matches = (num_matches) ->
   matches = []
-  for num in [0..num_matches-1]
+  for i in [0..num_matches-1]
     matches.push new Match
   return matches
 
 # generate bracket
-generate_bracket = (matches) ->
+render_bracket = (matches) ->
   html = ""
-  bracket_height = 20
-  bracket_top_margin_offset = 10
-  bracket_top_margin_offset = bracket_top_margin_offset * 2
-  html += "<div style=\"height:auto; width: 200px; float:left; margin-top:-#{bracket_top_margin_offset}px\">"
-  for match in matches
+  bracket_height = INITIAL_BRACKET_HEIGHT
+  bracket_top_margin_offset = INITIAL_BRACKET_TOP_MARGIN_OFFSET
+  match_top_margin_offset = INITIAL_MATCH_TOP_MARGIN_OFFSET
+  first_round = true
+  round_matches_hash = generate_round_matches_hash(matches.length)
+  # iterate over round matches hash
+  # shift elements off of matches based on matches in round
+  # render round
+  for round, matches_in_round of round_matches_hash
     bracket_height = bracket_height * 2
-    html += render_match(match, bracket_height)
+    bracket_top_margin_offset = bracket_top_margin_offset * 2
+    match_top_margin_offset = match_top_margin_offset + 2
+    matches_to_render = []
+    for i in [1..matches_in_round]
+      matches_to_render.push(matches.shift())
+    html += render_round(matches_to_render, bracket_top_margin_offset, bracket_height, match_top_margin_offset)
+  html += render_champion(matches.shift(), bracket_top_margin_offset * 2)
   return html
 
-render_match = (match, bracket_height) ->
+render_round = (matches, bracket_top_margin_offset, bracket_height, match_top_margin_offset) ->
   html = ""
-  html += "<div style=\"width:200px; height:#{bracket_height}px; position:relative;\">
+  html += "<div style=\"height:auto; width:#{BRACKET_WIDTH}px; float:left; margin-top:-#{bracket_top_margin_offset}px\">"
+  for match in matches
+    html += render_match(match, bracket_height, match_top_margin_offset)
+  html += "</div>"
+  return html
+
+render_match = (match, bracket_height, match_top_margin_offset) ->
+  html = ""
+  html += "<div style=\"width:#{BRACKET_WIDTH}px; height:#{bracket_height}px; position:relative; margin-top:#{match_top_margin_offset}px;\">
               <div style=\"position:absolute; bottom:0; left:20px;\">
                 #{match.team1}
                 </div>
           </div>"
-  html += "<div style=\"width:200px; height:#{bracket_height}px; border:2px solid black; border-left:none; position:relative;\">
+  html += "<div style=\"width:#{BRACKET_WIDTH}px; height:#{bracket_height}px; border:1px solid black; border-left:none; position:relative;\">
               <div style=\"position:absolute; bottom:0; left:20px;\">
                 #{match.team2}
               </div>
             </div>"
   return html
+
+render_champion = (match, bracket_height) ->
+  html = ""
+  html += "<div style=\"height:auto; width: #{BRACKET_WIDTH}px; float:left;\">"
+  html += "<div style=\"width:#{BRACKET_WIDTH}px; border-bottom: 1px solid #000; height:#{bracket_height}px; position:relative;\">
+            <div style=\"position:absolute; bottom:0; left:20px;\">
+              #{match.team1}
+              </div>
+          </div>"
+  html += "</div>"
+
+
+calculate_rounds = (num_matches) ->
+  round_count = 0
+  while num_matches >= 1
+    num_matches = num_matches / 2
+    round_count++
+  return round_count
+
+# generate a hash with round number as key and array of matches as value
+generate_round_matches_hash = (num_matches) ->
+  rounds = calculate_rounds(num_matches)
+  round_matches_hash = {}
+  round_number = 1
+  while num_matches > 1
+    num_matches = num_matches / 2
+    round_matches_hash[round_number] = num_matches
+    round_number++
+  return round_matches_hash
