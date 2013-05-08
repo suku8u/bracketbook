@@ -1,63 +1,52 @@
-<p id="notice"><%= notice %></p>
+<div id="nav-options">
+  <%= link_to "Edit this bracket", edit_bracket_path, :class => "btn btn-primary" %>
+</div>
 
-<p>
-  <b>Name:</b>
-  <%= @bracket.name %>
-</p>
+<h1> <%= @bracket.name %> </h1>
 
-<h2>Teams</h2>
-<ul id="teams">
-  <% @bracket.teams.each do |team| %>
-    <li>
-      <%= team.name %>
-    </li>
+<div id="bracket-box" class="clearfix">
+
+  <% bracket_height = 20 %>
+  <% bracket_top_margin_offset = 10 %>
+  <% match_top_margin_offset = -2 %>
+  <% bracket_width = 148 %>
+  <% @matches_in_each_round.each_with_index do |num_matches, index| %>
+    <% bracket_height = bracket_height * 2 %>
+    <% bracket_top_margin_offset = bracket_top_margin_offset * 2 %>
+    <% match_top_margin_offset = match_top_margin_offset + 2 %>
+    <div style="height:auto; width:<%= bracket_width %>px; float:left; margin-top:-<%= bracket_top_margin_offset %>px">
+      <% num_matches.times do %>
+        <% m = @matches.shift %>
+        <div style="width:<%= bracket_width %>px; height:<%= bracket_height %>px; position:relative; margin-top:<%= match_top_margin_offset %>px;">
+          <div style="position:absolute; bottom:0; left:20px;">
+            <% if !m[:team1_name].blank? %>
+              <%= m[:team1_name] %> (<%= m[:team1_score] %>)
+            <% end %>
+          </div>
+        </div>
+        <div style="width:<%= bracket_width %>px; height:<%= bracket_height %>px; border:1px solid black; border-left:none; position:relative;">
+          <div style="position:absolute; bottom:0; left:20px;">
+            <% if !m[:team2_name].blank? %>
+              <%= m[:team2_name] %> (<%= m[:team2_score] %>)
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
   <% end %>
-</ul>
 
-<% bracket_height = 20 %>
-<% bracket_top_margin_offset = 10 %>
-<% match_top_margin_offset = -2 %>
-<% bracket_width = 150 %>
-<% @matches_in_each_round.each_with_index do |num_matches, index| %>
-  <% bracket_height = bracket_height * 2 %>
-  <% bracket_top_margin_offset = bracket_top_margin_offset * 2 %>
-  <% match_top_margin_offset = match_top_margin_offset + 2 %>
-  <div style="height:auto; width:<%= bracket_width %>px; float:left; margin-top:-<%= bracket_top_margin_offset %>px">
-    <% num_matches.times do %>
+    <% bracket_top_margin_offset = bracket_top_margin_offset * 2 %>
+    <div style="height:auto; width:<%= bracket_width %>px; float:left; border-bottom:1px solid black; position:relative; top:<%= bracket_top_margin_offset %>px; padding-left:20px;">
       <% m = @matches.shift %>
-      <div style="width:<%= bracket_width %>px; height:<%= bracket_height %>px; position:relative; margin-top:<%= match_top_margin_offset %>px;">
-        <div style="position:absolute; bottom:0; left:20px;">
-          <% if !m[:team1_name].blank? %>
-            <%= m[:team1_name] %> (<%= m[:team1_score] %>)
-          <% end %>
-        </div>
-      </div>
-      <div style="width:<%= bracket_width %>px; height:<%= bracket_height %>px; border:1px solid black; border-left:none; position:relative;">
-        <div style="position:absolute; bottom:0; left:20px;">
-          <% if !m[:team2_name].blank? %>
-            <%= m[:team2_name] %> (<%= m[:team2_score] %>)
-          <% end %>
-        </div>
-        <div style="position:absolute; top:0; right:20px;">
-          <% if not m[:edit_path].blank? %>
-            <%= link_to "edit", m[:edit_path] %>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-<% end %>
+      <% if m[:team1_name] != "?" %>
+        <%= m[:team1_name] %>
+      <% elsif m[:team2_name] != "?" %>
+        <%= m[:team2_name] %>
+      <% else %>
+        ?
+      <% end %>
+    </div>
 
-  <% bracket_top_margin_offset = bracket_top_margin_offset * 2 %>
-  <div style="height:auto; width:<%= bracket_width %>px; float:left; border-bottom:1px solid black; position:relative; top:<%= bracket_top_margin_offset %>px; padding-left:20px;">
-    <% m = @matches.shift %>
-    <% if m[:team1_name] != "?" %>
-      <%= m[:team1_name] %>
-    <% elsif m[:team2_name] != "?" %>
-      <%= m[:team2_name] %>
-    <% else %>
-      ?
-    <% end %>
-  </div>
+</div> <!--end bracket-box-->
 
 <div class="clearfix"></div>

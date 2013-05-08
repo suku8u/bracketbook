@@ -5,7 +5,12 @@
 INITIAL_BRACKET_HEIGHT = 20
 INITIAL_BRACKET_TOP_MARGIN_OFFSET = 10
 INITIAL_MATCH_TOP_MARGIN_OFFSET = -2
-BRACKET_WIDTH = 150
+BRACKET_WIDTH = 148
+
+jQuery ->
+  $('.alert').on 'click', '.close', (event) =>
+    event.preventDefault()
+    $(event.currentTarget).closest('.alert').hide()
 
 jQuery ->
   $('#new_bracket input[type=submit].btn').hide()
@@ -20,6 +25,9 @@ jQuery ->
   $('#generate-bracket').bind 'click', (event) =>
     # prevent default event
     event.preventDefault()
+
+    # bracket name
+    $('#bracket-name-box').empty().append($('#bracket_name').val())
 
     # value from text area, teams separated by line break
     bracket_teams_string = $('#bracket_bracket_teams').val()

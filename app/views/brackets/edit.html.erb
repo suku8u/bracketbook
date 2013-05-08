@@ -1,6 +1,89 @@
-<h1>Editing bracket</h1>
+<div id="nav-options">
+  <%= link_to "Show bracket", bracket_path, :class => "btn btn-primary" %>
+</div>
 
-<%= render 'form' %>
+<%= form_for @bracket, :html => {:class => "form-horizontal"} do |f| %>
+  <% if @bracket.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@bracket.errors.count, "error") %> prohibited this team from being saved:</h2>
 
-<%= link_to 'Show', @bracket %> |
-<%= link_to 'Back', brackets_path %>
+      <ul>
+      <% @bracket.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+      <%= f.text_field :name %>
+      <%= f.submit :class => "btn btn-success", :value => "Update bracket name" %>
+<% end %>
+
+<h1> <%= @bracket.name %> </h1>
+
+<div id="bracket-box" class="clearfix">
+
+  <% bracket_height = 20 %>
+  <% bracket_top_margin_offset = 10 %>
+  <% match_top_margin_offset = -2 %>
+  <% bracket_width = 148 %>
+  <% @matches_in_each_round.each_with_index do |num_matches, index| %>
+  <% bracket_height = bracket_height * 2 %>
+  <% bracket_top_margin_offset = bracket_top_margin_offset * 2 %>
+  <% match_top_margin_offset = match_top_margin_offset + 2 %>
+  <div style="height:auto; width:<%= bracket_width %>px; float:left; margin-top:-<%= bracket_top_margin_offset %>px">
+    <% num_matches.times do %>
+    <% m = @matches.shift %>
+    <div style="width:<%= bracket_width %>px; height:<%= bracket_height %>px; position:relative; margin-top:<%= match_top_margin_offset %>px;">
+      <div style="position:absolute; bottom:0; left:20px;">
+        <% if !m[:team1_name].blank? %>
+        <%= m[:team1_name] %> (<%= m[:team1_score] %>)
+        <% end %>
+      </div>
+    </div>
+    <div style="width:<%= bracket_width %>px; height:<%= bracket_height %>px; border:1px solid black; border-left:none; position:relative;">
+      <div style="position:absolute; bottom:0; left:20px;">
+        <% if !m[:team2_name].blank? %>
+        <%= m[:team2_name] %> (<%= m[:team2_score] %>)
+        <% end %>
+      </div>
+      <div style="position:absolute; top:2px; right:2px;">
+        <% if not m[:edit_path].blank? %>
+        <%= link_to "Edit match", m[:edit_path], :class => "btn btn-mini btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+  <% end %>
+
+  <% bracket_top_margin_offset = bracket_top_margin_offset * 2 %>
+  <div style="height:auto; width:<%= bracket_width %>px; float:left; border-bottom:1px solid black; position:relative; top:<%= bracket_top_margin_offset %>px; padding-left:20px;">
+    <% m = @matches.shift %>
+    <% if m[:team1_name] != "?" %>
+    <%= m[:team1_name] %>
+    <% elsif m[:team2_name] != "?" %>
+    <%= m[:team2_name] %>
+    <% else %>
+    ?
+    <% end %>
+  </div>
+
+</div> <!--end bracket-box-->
+
+<div id="bracket-teams">
+  <h2>Teams</h2>
+  <table class="table table-striped table-bordered">
+    <tr>
+      <th>Name</th>
+      <th>Edit</th>
+      <% @teams.each do |team| %>
+      <tr>
+        <td><%= team.name %></td>
+        <td><%= link_to "Edit team", edit_bracket_team_path(team), :class => "btn btn-mini btn-primary" %></td>
+      </tr>
+      <% end %>
+    </tr>
+  </table>
+</div>
+
+<div class="clearfix"></div>

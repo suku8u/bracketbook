@@ -34,7 +34,8 @@ class TeamsController < ApplicationController
 
   # GET /teams/1/edit
   def edit
-    @team = Team.find(params[:id])
+    @bracket = Bracket.find(params[:id])
+    @team = Team.find(params[:bracket_id])
   end
 
   # POST /teams
@@ -56,11 +57,12 @@ class TeamsController < ApplicationController
   # PUT /teams/1
   # PUT /teams/1.json
   def update
+    @bracket = Bracket.find(params[:bracket_id])
     @team = Team.find(params[:id])
 
     respond_to do |format|
       if @team.update_attributes(params[:team])
-        format.html { redirect_to @team, notice: 'Team was successfully updated.' }
+        format.html { redirect_to edit_bracket_path(@bracket), notice: 'Team was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
