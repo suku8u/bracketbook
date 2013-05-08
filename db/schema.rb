@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130423215238) do
+ActiveRecord::Schema.define(:version => 20130508212913) do
 
   create_table "brackets", :force => true do |t|
     t.string   "name"
@@ -22,11 +22,11 @@ ActiveRecord::Schema.define(:version => 20130423215238) do
   create_table "matches", :force => true do |t|
     t.integer  "team1_id"
     t.integer  "team2_id"
-    t.integer  "team1_score"
-    t.integer  "team2_score"
+    t.integer  "team1_score",      :default => 0
+    t.integer  "team2_score",      :default => 0
     t.integer  "bracket_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.integer  "next_match_id"
     t.integer  "bracket_position"
   end

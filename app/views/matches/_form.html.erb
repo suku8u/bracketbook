@@ -1,8 +1,8 @@
 <%= form_for [@bracket, @match] do |f| %>
   <% if @match.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@match.errors.count, "error") %> prohibited this match from being saved:</h2>
-
+    <div id="error_explanation" class="alert-block alert-danger">
+      <a href="#" class="close" data-dismiss="alert">&#215;</a>
+      <p><%= pluralize(@match.errors.count, "error") %> prohibited this match from being saved:</p>
       <ul>
       <% @match.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>

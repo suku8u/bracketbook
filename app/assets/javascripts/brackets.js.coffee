@@ -9,9 +9,9 @@ BRACKET_WIDTH = 148
 BRACKET_LEFT_MARGIN = 10
 
 jQuery ->
-  $('.alert').on 'click', '.close', (event) =>
+  $('.alert, .alert-block').on 'click', '.close', (event) =>
     event.preventDefault()
-    $(event.currentTarget).closest('.alert').hide()
+    $(event.currentTarget).closest('.alert, .alert-block').hide()
 
 jQuery ->
   $('#new_bracket input[type=submit].btn').hide()
