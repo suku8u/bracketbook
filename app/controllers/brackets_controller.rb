@@ -23,8 +23,8 @@ class BracketsController < ApplicationController
     end
 
     @matches = matches.map do |match|
-      team1_name = "?"
-      team2_name = "?"
+      team1_name = ""
+      team2_name = ""
       team1_score = "?"
       team2_score = "?"
       edit_path = ""

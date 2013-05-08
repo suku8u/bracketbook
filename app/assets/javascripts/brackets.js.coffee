@@ -8,7 +8,16 @@ INITIAL_MATCH_TOP_MARGIN_OFFSET = -2
 BRACKET_WIDTH = 150
 
 jQuery ->
-  $('#new_bracket input[type=submit].btn').bind 'click', (event) =>
+  $('#new_bracket input[type=submit].btn').hide()
+  $('#edit-bracket').hide()
+  $('#edit-bracket').bind 'click', (event) =>
+    $('#new_bracket .field').slideDown()
+    $('#new_bracket input[type=submit].btn').hide()
+    $('#edit-bracket').hide()
+    $('#generate-bracket').slideDown()
+
+jQuery ->
+  $('#generate-bracket').bind 'click', (event) =>
     # prevent default event
     event.preventDefault()
 
@@ -44,7 +53,11 @@ jQuery ->
       else
         m.team2 = ""
 
-    $('#bracket-box').append(render_bracket(matches))
+    $('#bracket-box').empty().append(render_bracket(matches)).fadeIn(1000)
+    $('#new_bracket .field').slideUp()
+    $('#generate-bracket').hide()
+    $('#new_bracket input[type=submit].btn').show()
+    $('#edit-bracket').show()
 
 # Match class
 class Match

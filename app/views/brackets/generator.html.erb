@@ -1,5 +1,9 @@
 <h1>Bracket Generator</h1>
 
+<div id="bracket-box" class="clearfix" style="margin:20px 0; display:none;">
+
+</div>
+
 <%= form_for(@bracket) do |f| %>
   <% if @bracket.errors.any? %>
     <div id="error_explanation">
@@ -22,10 +26,9 @@
     <%= f.text_area :bracket_teams, value: "a\nb\nc\nd" %>
   </div>
   <div class="actions">
-    <%= f.submit :class => 'btn btn-primary' %>
+    <%= f.submit :class => 'btn btn-success', :value => 'Save Bracket' %>
   </div>
 <% end %>
 
-<div id="bracket-box" class="clearfix">
-
-</div>
+<button id="generate-bracket" class="btn btn-primary">Generate Bracket</button>
+<button id="edit-bracket" class="btn btn-primary">Edit Bracket</button>
