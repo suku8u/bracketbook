@@ -3,19 +3,19 @@
 </div>
 
 <%= form_for @bracket, :html => {:class => "form-horizontal"} do |f| %>
-  <% if @bracket.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@bracket.errors.count, "error") %> prohibited this team from being saved:</h2>
+<% if @bracket.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(@bracket.errors.count, "error") %> prohibited this team from being saved:</h2>
 
-      <ul>
-      <% @bracket.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-      <%= f.text_field :name %>
-      <%= f.submit :class => "btn btn-success", :value => "Update bracket name" %>
+  <ul>
+    <% @bracket.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+<%= f.text_field :name %>
+<%= f.submit :class => "btn btn-success", :value => "Update bracket name" %>
 <% end %>
 
 <h1> <%= @bracket.name %> </h1>
@@ -34,16 +34,16 @@
     <% num_matches.times do %>
     <% m = @matches.shift %>
     <div style="width:<%= bracket_width %>px; height:<%= bracket_height %>px; position:relative; margin-top:<%= match_top_margin_offset %>px;">
-      <div style="position:absolute; bottom:0; left:20px;">
+      <div style="position:absolute; bottom:0; left:10px;">
         <% if !m[:team1_name].blank? %>
-        <%= m[:team1_name] %> (<%= m[:team1_score] %>)
+        <span class="badge <%= win_loss_indicator(m[:team1_score], m[:team2_score]) %>"><%= m[:team1_score] %></span> <%= m[:team1_name] %>
         <% end %>
       </div>
     </div>
     <div style="width:<%= bracket_width %>px; height:<%= bracket_height %>px; border:1px solid black; border-left:none; position:relative;">
-      <div style="position:absolute; bottom:0; left:20px;">
+      <div style="position:absolute; bottom:0; left:10px;">
         <% if !m[:team2_name].blank? %>
-        <%= m[:team2_name] %> (<%= m[:team2_score] %>)
+        <span class="badge <%= win_loss_indicator(m[:team2_score], m[:team1_score]) %>"><%= m[:team2_score] %></span> <%= m[:team2_name] %>
         <% end %>
       </div>
       <div style="position:absolute; top:2px; right:2px;">
@@ -60,9 +60,9 @@
   <div style="height:auto; width:<%= bracket_width %>px; float:left; border-bottom:1px solid black; position:relative; top:<%= bracket_top_margin_offset %>px; padding-left:20px;">
     <% m = @matches.shift %>
     <% if m[:team1_name] != "?" %>
-    <%= m[:team1_name] %>
+    <%= m[:team1_name] %> <span class="badge badge-warning">Champion</span>
     <% elsif m[:team2_name] != "?" %>
-    <%= m[:team2_name] %>
+    <%= m[:team2_name] %> <span class="badge badge-warning">Champion</span>
     <% else %>
     ?
     <% end %>

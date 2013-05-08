@@ -81,7 +81,7 @@ class MatchesController < ApplicationController
           next_match.save
         end
 
-        format.html { redirect_to @bracket, notice: 'Match was successfully updated.' }
+        format.html { redirect_to edit_bracket_path(@bracket), notice: 'Match was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

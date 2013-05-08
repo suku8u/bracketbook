@@ -6,6 +6,7 @@ INITIAL_BRACKET_HEIGHT = 20
 INITIAL_BRACKET_TOP_MARGIN_OFFSET = 10
 INITIAL_MATCH_TOP_MARGIN_OFFSET = -2
 BRACKET_WIDTH = 148
+BRACKET_LEFT_MARGIN = 10
 
 jQuery ->
   $('.alert').on 'click', '.close', (event) =>
@@ -114,12 +115,12 @@ render_round = (matches, bracket_top_margin_offset, bracket_height, match_top_ma
 render_match = (match, bracket_height, match_top_margin_offset) ->
   html = ""
   html += "<div style=\"width:#{BRACKET_WIDTH}px; height:#{bracket_height}px; position:relative; margin-top:#{match_top_margin_offset}px;\">
-              <div style=\"position:absolute; bottom:0; left:20px;\">
+              <div style=\"position:absolute; bottom:0; left:#{BRACKET_LEFT_MARGIN}px;\">
                 #{match.team1}
                 </div>
           </div>"
   html += "<div style=\"width:#{BRACKET_WIDTH}px; height:#{bracket_height}px; border:1px solid black; border-left:none; position:relative;\">
-              <div style=\"position:absolute; bottom:0; left:20px;\">
+              <div style=\"position:absolute; bottom:0; left:#{BRACKET_LEFT_MARGIN}px;\">
                 #{match.team2}
               </div>
             </div>"
@@ -129,7 +130,7 @@ render_champion = (match, bracket_height) ->
   html = ""
   html += "<div style=\"height:auto; width: #{BRACKET_WIDTH}px; float:left;\">"
   html += "<div style=\"width:#{BRACKET_WIDTH}px; border-bottom: 1px solid #000; height:#{bracket_height}px; position:relative;\">
-            <div style=\"position:absolute; bottom:0; left:20px;\">
+            <div style=\"position:absolute; bottom:0; left:#{BRACKET_LEFT_MARGIN}px;\">
               #{match.team1}
               </div>
           </div>"
