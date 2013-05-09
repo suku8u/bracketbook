@@ -15,6 +15,7 @@ class BracketsController < ApplicationController
   # GET /brackets/1
   # GET /brackets/1.json
   def show
+    @show_edit_match = false
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @matches.to_json }
@@ -34,6 +35,7 @@ class BracketsController < ApplicationController
 
   # GET /brackets/1/edit
   def edit
+    @show_edit_match = true
     @teams = @bracket.teams
     respond_to do |format|
       format.html # show.html.erb

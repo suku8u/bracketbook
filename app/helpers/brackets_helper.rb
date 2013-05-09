@@ -1,15 +1,15 @@
 module BracketsHelper
-  def win_loss_indicator(team1_score, team2_score, name)
+  def win_loss_indicator(team_a_score, team_b_score, team_a_name, team_b_name)
     class_string = ""
     case
-    when team1_score > team2_score
+    when team_a_score > team_b_score
       class_string += "badge-success"
-    when team2_score > team1_score
+    when team_b_score > team_a_score
       class_string += "badge-important"
     else
       ""
     end
-    if name.downcase == "bye"
+    if team_a_name.downcase == "bye" || team_b_name.downcase == "bye"
       class_string += " hidden"
     end
     return class_string
