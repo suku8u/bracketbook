@@ -7,11 +7,7 @@ INITIAL_BRACKET_TOP_MARGIN_OFFSET = 10
 INITIAL_MATCH_TOP_MARGIN_OFFSET = -2
 BRACKET_WIDTH = 148
 BRACKET_LEFT_MARGIN = 10
-
-jQuery ->
-  $('.alert, .alert-block').on 'click', '.close', (event) =>
-    event.preventDefault()
-    $(event.currentTarget).closest('.alert, .alert-block').hide()
+bracket_team_names = []
 
 jQuery ->
   $('#new_bracket input[type=submit].btn').hide()
@@ -35,6 +31,12 @@ jQuery ->
 
     # array of team names
     bracket_team_names = bracket_teams_string.split(/\r?\n/)
+
+    # insert byes into array
+    bracket_team_names = insert_byes(bracket_team_names)
+
+    # replace text area value with proper list with byes
+    $('#bracket_bracket_teams').val(team_array_to_string(bracket_team_names))
 
     # number of teams
     num_teams = bracket_team_names.length
@@ -154,3 +156,35 @@ generate_round_matches_hash = (num_matches) ->
     round_matches_hash[round_number] = num_matches
     round_number++
   return round_matches_hash
+
+# insert Byes for closest highest power of 2 minus total teams
+# return array with Byes
+insert_byes = (team_array) ->
+  new_array = []
+  num_teams = team_array.length
+  console.log(num_teams)
+  for team in team_array
+    if (/^\s*$|bye/).test(team)
+      new_array.push("Bye")
+    else
+      new_array.push(team)
+  expected_teams = switch
+    when num_teams <= 4 then 4
+    when num_teams <= 8 then 8
+    when num_teams <= 16 then 16
+    when num_teams <= 32 then 32
+    else 0
+  console.log(expected_teams)
+  difference = expected_teams - num_teams
+  console.log(difference)
+  for i in [1..difference] by 1
+    new_array.push("Bye")
+  console.log(new_array)
+  return new_array
+
+# convert team array back into string
+team_array_to_string = (team_array) ->
+  string = ""
+  for team in team_array
+    string += team + "\n"
+  return string.trim()

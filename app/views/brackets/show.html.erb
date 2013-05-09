@@ -20,14 +20,14 @@
         <div style="width:<%= bracket_width %>px; height:<%= bracket_height %>px; position:relative; margin-top:<%= match_top_margin_offset %>px;">
           <div style="position:absolute; bottom:0; left:10px;">
             <% if !m[:team1_name].blank? %>
-              <span class="badge <%= win_loss_indicator(m[:team1_score], m[:team2_score]) %>"><%= m[:team1_score] %></span> <%= m[:team1_name] %>
+              <span class="badge <%= win_loss_indicator(m[:team1_score], m[:team2_score], m[:team1_name]) %>"><%= m[:team1_score] %></span> <%= m[:team1_name] %>
             <% end %>
           </div>
         </div>
         <div style="width:<%= bracket_width %>px; height:<%= bracket_height %>px; border:1px solid black; border-left:none; position:relative;">
           <div style="position:absolute; bottom:0; left:10px;">
             <% if !m[:team2_name].blank? %>
-              <span class="badge <%= win_loss_indicator(m[:team2_score], m[:team1_score]) %>"><%= m[:team2_score] %></span> <%= m[:team2_name] %>
+              <span class="badge <%= win_loss_indicator(m[:team2_score], m[:team1_score], m[:team2_name]) %>"><%= m[:team2_score] %></span> <%= m[:team2_name] %>
             <% end %>
           </div>
         </div>
@@ -36,14 +36,14 @@
   <% end %>
 
     <% bracket_top_margin_offset = bracket_top_margin_offset * 2 %>
-    <div style="height:auto; width:<%= bracket_width %>px; float:left; border-bottom:1px solid black; position:relative; top:<%= bracket_top_margin_offset %>px; padding-left:20px;">
+    <div style="height:auto; width:<%= bracket_width %>px; float:left; border-bottom:1px solid black; position:relative; top:<%= bracket_top_margin_offset - 20 %>px; padding-left:20px;">
       <% m = @matches.shift %>
-      <% if m[:team1_name] != "?" %>
+      <% if m[:team1_name] != "" %>
         <%= m[:team1_name] %> <span class="badge badge-warning">Champion</span>
-      <% elsif m[:team2_name] != "?" %>
+      <% elsif m[:team2_name] != "" %>
         <%= m[:team2_name] %> <span class="badge badge-warning">Champion</span>
       <% else %>
-        ?
+        &nbsp;
       <% end %>
     </div>
 
