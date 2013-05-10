@@ -1,5 +1,7 @@
 Tournament::Application.routes.draw do
 
+  devise_for :users
+
   root to: 'info#home'
 
   get 'brackets/generator', :to => 'brackets#generator'

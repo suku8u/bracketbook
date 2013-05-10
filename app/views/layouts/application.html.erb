@@ -8,6 +8,11 @@
 </head>
 <body>
 
+
+<nav>
+  <%= link_to "Sign up", new_user_registration_path %>
+</nav>
+
  <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
@@ -53,6 +58,10 @@
   </footer>
 
 </div> <!-- /container -->
+
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+
 
 </body>
 </html>
