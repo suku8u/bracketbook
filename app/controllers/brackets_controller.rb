@@ -47,21 +47,13 @@ class BracketsController < ApplicationController
   # POST /brackets.json
   def create
     @bracket = Bracket.new(params[:bracket])
-    #raise params[:bracket][:bracket_teams].inspect
     bracket_teams = params[:bracket][:bracket_teams].split(/\r?\n/)
-    #raise bracket_teams.inspect
+    bracket_teams_count = bracket_teams.count
 
     respond_to do |format|
       if @bracket.save
-        # save teams to bracket
-        bracket_teams.each do |t|
-          team = @bracket.teams.build
-          team.name = t
-          team.save
-        end
-
-        # generate correct number of matches for this bracket
-        case @bracket.teams.count
+        # calculate correct number of matches for this bracket
+        case bracket_teams_count
         when 2..4
           num_matches = 4
         when 5..8
@@ -74,8 +66,20 @@ class BracketsController < ApplicationController
           num_matches = 0
         end
 
-        half_num_matches = num_matches / 2
+        # calculate difference of num_matches and bracket_teams_count
+        difference = num_matches - bracket_teams_count
 
+        # fill in the rest of the missing spots with a space
+        difference.times { bracket_teams << "" }
+
+        # save teams to bracket
+        bracket_teams.each do |t|
+          team = @bracket.teams.build
+          team.name = t
+          team.save
+        end
+
+        # create and save matches with position number
         bracket_position_counter = 0
         num_matches.times do
           bracket_position_counter += 1
@@ -96,9 +100,10 @@ class BracketsController < ApplicationController
         end
 
         # create next match connections
+        half_num_matches = num_matches / 2
         increment = true
         increment_value = -1
-        matches.each_with_index do |match, index|
+        matches.each do |match|
          if increment == true
             increment_value += 1
             increment = false

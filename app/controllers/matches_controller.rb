@@ -36,6 +36,10 @@ class MatchesController < ApplicationController
   def edit
     @bracket = Bracket.find(params[:id])
     @match = @bracket.matches.find(params[:bracket_id])
+    @team1_name = Team.find(@match.team1_id).name
+    @team2_name = Team.find(@match.team2_id).name
+    @team1_name = "Bye" if @team1_name.blank?
+    @team2_name = "Bye" if @team2_name.blank?
   end
 
   # POST /matches

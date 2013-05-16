@@ -13,11 +13,11 @@
 
   <div class="well">
     <div class="field">
-      <%= f.label :team1_score, Team.find(@match.team1_id).name %>
+      <%= f.label :team1_score, @team1_name %>
       <%= f.number_field :team1_score %>
     </div>
     <div class="field">
-      <%= f.label :team2_score, Team.find(@match.team2_id).name %>
+      <%= f.label :team2_score, @team2_name %>
       <%= f.number_field :team2_score %>
     </div>
     <div class="actions">
