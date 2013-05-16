@@ -1,7 +1,7 @@
 class Bracket < ActiveRecord::Base
   attr_accessible :name, :bracket_teams
-  has_many :teams, :dependent => :delete_all
-  has_many :matches, :dependent => :delete_all
+  has_many :teams, :dependent => :delete_all, :order => 'id ASC'
+  has_many :matches, :dependent => :delete_all, :order => 'id ASC'
 
   validates :name, :presence => true
 
