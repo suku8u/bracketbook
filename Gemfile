@@ -42,7 +42,7 @@ group :test, :development do
   gem 'pry-rails'
   gem 'pry-doc'
   gem 'hirb'
-  gem 'devise', '2.1.0.rc'
+  gem 'devise', '2.1.0'
 end
 
 group :test do
