@@ -10,6 +10,10 @@ BRACKET_LEFT_MARGIN = 10
 bracket_team_names = []
 
 jQuery ->
+  bind_bracket_text_box()
+
+# bind keyup on text box generator
+bind_bracket_text_box = ->
   $('#bracket_bracket_teams').on 'keyup', (event) =>
     # prevent default event
     event.preventDefault()
@@ -56,6 +60,7 @@ jQuery ->
         m.team2 = ""
 
     $('#bracket-box').empty().append(render_bracket(matches))
+# end
 
 # Match class
 class Match

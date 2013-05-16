@@ -9,7 +9,7 @@ module BracketsHelper
     else
       ""
     end
-    if team_a_name.downcase == "bye" || team_b_name.downcase == "bye"
+    if team_a_name.downcase == "" || team_b_name.downcase == ""
       class_string += " hidden"
     end
     return class_string
@@ -17,8 +17,10 @@ module BracketsHelper
 
   def show_team team_name, team_edit_path, allow_edit
     if allow_edit
+      team_name = "Bye" if team_name.blank?
       return link_to team_name, team_edit_path
     else
+      team_name = "Bye" if team_name.blank?
       return team_name
     end
   end
