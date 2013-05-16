@@ -19,6 +19,14 @@
         </li>
       </ul>
       <ul class="nav pull-right">
+        <% if user_signed_in? %>
+        <li style="color:#fff;">
+          Signed in as <%= current_user.email %>
+        </li>
+        <li>
+          <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+        </li>
+        <% end %>
         <li>
           <%= link_to "Sign up", new_user_registration_path %>
         </li>
@@ -31,12 +39,12 @@
 <div class="container-fluid">
 
   <% flash.each do |name, msg| %>
-    <% if msg.is_a?(String) %>
-    <div class="alert alert-<%= name == :notice ? "success" : "error" %>">
-      <a href="#" class="close" data-dismiss="alert">&#215;</a>
-      <%= content_tag :div, msg, :id => "flash_#{name}" %>
-    </div>
-    <% end %>
+  <% if msg.is_a?(String) %>
+  <div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+    <a href="#" class="close" data-dismiss="alert">&#215;</a>
+    <%= content_tag :div, msg, :id => "flash_#{name}" %>
+  </div>
+  <% end %>
   <% end %>
 
   <%= yield %>
