@@ -53,7 +53,7 @@ class BracketsController < ApplicationController
       if @bracket.save
         # calculate correct number of matches for this bracket
         case bracket_teams_count
-        when 2..4
+        when 1..4
           num_matches = 4
         when 5..8
           num_matches = 8
@@ -68,13 +68,17 @@ class BracketsController < ApplicationController
         # calculate difference of num_matches and bracket_teams_count
         difference = num_matches - bracket_teams_count
 
-        # fill in the rest of the missing spots with a space
-        difference.times { bracket_teams << "" }
+        # fill in the rest of the missing spots with a Bye
+        difference.times { bracket_teams << "Bye" }
 
         # save teams to bracket
         bracket_teams.each do |t|
           team = @bracket.teams.build
-          team.name = t
+          if t.blank?
+            team.name = "Bye"
+          else
+            team.name = t
+          end
           team.save
         end
 

@@ -22,4 +22,10 @@
 
 <%= render 'bracket' %>
 
+<%= link_to "Delete Bracket",
+  bracket_path(@bracket),
+  :method => :delete,
+  :confirm => "Are you sure you want to delete this bracket?",
+  :class => 'btn btn-danger' %>
+
 <div class="clearfix"></div>
