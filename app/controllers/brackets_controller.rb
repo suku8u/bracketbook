@@ -166,7 +166,7 @@ class BracketsController < ApplicationController
     matches = @bracket.matches
     num_matches = matches.count
     @matches_in_each_round = []
-    while num_matches > 0
+    while num_matches > 1
       num_matches = num_matches / 2
       @matches_in_each_round << num_matches if num_matches > 0
     end
