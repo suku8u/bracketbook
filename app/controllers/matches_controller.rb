@@ -34,8 +34,8 @@ class MatchesController < ApplicationController
 
   # GET /matches/1/edit
   def edit
-    @bracket = Bracket.find(params[:id])
-    @match = @bracket.matches.find(params[:bracket_id])
+    @bracket = Bracket.find(params[:bracket_id])
+    @match = @bracket.matches.find(params[:id])
     @team1_name = Team.find(@match.team1_id).name
     @team2_name = Team.find(@match.team2_id).name
     @team1_name = "Bye" if @team1_name.blank?

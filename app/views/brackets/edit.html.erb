@@ -22,20 +22,4 @@
 
 <%= render 'bracket' %>
 
-<div id="bracket-teams">
-  <h2>Teams</h2>
-  <table class="table table-striped table-bordered">
-    <tr>
-      <th>Name</th>
-      <th>Edit</th>
-      <% @teams.each do |team| %>
-      <tr>
-        <td><%= team.name %></td>
-        <td><%= link_to "Edit team", edit_bracket_team_path(team), :class => "btn btn-mini btn-primary" %></td>
-      </tr>
-      <% end %>
-    </tr>
-  </table>
-</div>
-
 <div class="clearfix"></div>

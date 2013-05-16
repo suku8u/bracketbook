@@ -14,4 +14,12 @@ module BracketsHelper
     end
     return class_string
   end
+
+  def show_team team_name, team_edit_path, allow_edit
+    if allow_edit
+      return link_to team_name, team_edit_path
+    else
+      return team_name
+    end
+  end
 end

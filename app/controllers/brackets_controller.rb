@@ -35,8 +35,7 @@ class BracketsController < ApplicationController
 
   # GET /brackets/1/edit
   def edit
-    @show_edit_match = true
-    @teams = @bracket.teams
+    @allow_edit = true
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @bracket }
@@ -161,7 +160,7 @@ class BracketsController < ApplicationController
   def get_all_bracket_info
     @bracket = Bracket.find(params[:id])
     matches = @bracket.matches
-    num_matches = @bracket.matches.count
+    num_matches = matches.count
     @matches_in_each_round = []
     while num_matches > 0
       num_matches = num_matches / 2
@@ -171,24 +170,30 @@ class BracketsController < ApplicationController
     @matches = matches.map do |match|
       team1_name = ""
       team2_name = ""
-      team1_score = "?"
-      team2_score = "?"
-      edit_path = ""
+      team1_score = ""
+      team2_score = ""
+      match_edit_path = ""
+      team1_edit_path = ""
+      team2_edit_path = ""
 
-      team1_name = Team.find_by_id(match.team1_id).name.truncate(18) unless match.team1_id.nil?
-      team2_name = Team.find_by_id(match.team2_id).name.truncate(18) unless match.team2_id.nil?
+      team1 = Team.find_by_id(match.team1_id)
+      team2 = Team.find_by_id(match.team2_id)
+      team1_name = team1.name.truncate(18) unless match.team1_id.nil?
+      team2_name = team2.name.truncate(18) unless match.team2_id.nil?
       team1_score = match.team1_score unless match.team1_score.nil?
       team2_score = match.team2_score unless match.team2_score.nil?
-      edit_path = edit_bracket_match_path(match) unless match.team1_id.nil? || match.team2_id.nil?
-
-
+      match_edit_path = edit_bracket_match_path(match.bracket, match) unless match.team1_id.nil? || match.team2_id.nil?
+      team1_edit_path = edit_bracket_team_path(team1.bracket, team1) unless team1.nil?
+      team2_edit_path = edit_bracket_team_path(team2.bracket, team2) unless team2.nil?
 
       {
         team1_name: team1_name,
         team2_name: team2_name,
         team1_score: team1_score,
         team2_score: team2_score,
-        edit_path: edit_path
+        match_edit_path: match_edit_path,
+        team1_edit_path: team1_edit_path,
+        team2_edit_path: team2_edit_path
       }
     end
   end

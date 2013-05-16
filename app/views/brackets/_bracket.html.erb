@@ -14,19 +14,19 @@
     <div style="width:<%= bracket_width %>px; height:<%= bracket_height %>px; position:relative; margin-top:<%= match_top_margin_offset %>px;">
       <div style="position:absolute; bottom:0; left:10px;">
         <% if !m[:team1_name].blank? %>
-        <span class="badge <%= win_loss_indicator(m[:team1_score], m[:team2_score], m[:team1_name], m[:team2_name]) %>"><%= m[:team1_score] %></span> <%= m[:team1_name] %>
+        <span class="badge <%= win_loss_indicator(m[:team1_score], m[:team2_score], m[:team1_name], m[:team2_name]) %>"><%= m[:team1_score] %></span> <%= show_team m[:team1_name], m[:team1_edit_path], @allow_edit %>
         <% end %>
       </div>
     </div>
     <div style="width:<%= bracket_width %>px; height:<%= bracket_height %>px; border:1px solid black; border-left:none; position:relative;">
       <div style="position:absolute; bottom:0; left:10px;">
         <% if !m[:team2_name].blank? %>
-        <span class="badge <%= win_loss_indicator(m[:team2_score], m[:team1_score], m[:team2_name], m[:team1_name]) %>"><%= m[:team2_score] %></span> <%= m[:team2_name] %>
+        <span class="badge <%= win_loss_indicator(m[:team2_score], m[:team1_score], m[:team2_name], m[:team1_name]) %>"><%= m[:team2_score] %></span> <%= show_team m[:team2_name], m[:team2_edit_path], @allow_edit %>
         <% end %>
       </div>
       <div style="position:absolute; top:2px; right:2px;">
-        <% if not m[:edit_path].blank? and @show_edit_match %>
-        <%= link_to "Edit match", m[:edit_path], :class => "btn btn-mini btn-primary" %>
+        <% if not m[:match_edit_path].blank? and @allow_edit %>
+        <%= link_to "Edit match", m[:match_edit_path], :class => "btn btn-mini btn-primary" %>
         <% end %>
       </div>
     </div>
@@ -38,9 +38,9 @@
   <div style="height:auto; width:<%= bracket_width %>px; float:left; border-bottom:1px solid black; position:relative; top:<%= bracket_top_margin_offset - 20 %>px; padding-left:20px;">
     <% m = @matches.shift %>
     <% if m[:team1_name] != "" %>
-    <%= m[:team1_name] %> <span class="badge badge-warning">Champion</span>
+    <span class="badge badge-warning"><i class="icon-star icon-white"></i></span> <%= m[:team1_name] %>
     <% elsif m[:team2_name] != "" %>
-    <%= m[:team2_name] %> <span class="badge badge-warning">Champion</span>
+    <span class="badge badge-warning"><i class="icon-star icon-white"></i></span> <%= m[:team2_name] %>
     <% else %>
     &nbsp;
     <% end %>

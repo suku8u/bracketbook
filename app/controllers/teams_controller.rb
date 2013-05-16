@@ -34,8 +34,8 @@ class TeamsController < ApplicationController
 
   # GET /teams/1/edit
   def edit
-    @bracket = Bracket.find(params[:id])
-    @team = Team.find(params[:bracket_id])
+    @bracket = Bracket.find(params[:bracket_id])
+    @team = Team.find(params[:id])
   end
 
   # POST /teams
