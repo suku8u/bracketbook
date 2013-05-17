@@ -7,8 +7,9 @@ Tournament::Application.routes.draw do
   get 'brackets/generator', :to => 'brackets#generator'
 
   resources :brackets do
-    resources :teams
-    resources :matches
+  resources :teams
+  resources :matches
+  resources :users
   end
 
   %w[about contact].each do |page|
