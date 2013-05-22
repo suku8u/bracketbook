@@ -4,14 +4,12 @@ Tournament::Application.routes.draw do
 
   root to: 'info#home'
 
-  get 'brackets/generator', :to => 'brackets#generator'
-
   resources :brackets do
     resources :teams
     resources :matches
   end
 
-  %w[about contact].each do |page|
+  %w[about contact generator].each do |page|
     get page, controller: "info", action: page
   end
 

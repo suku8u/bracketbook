@@ -1,4 +1,6 @@
 class TeamsController < ApplicationController
+  before_filter :find_and_authorize_bracket
+
   # GET /teams
   # GET /teams.json
   def index

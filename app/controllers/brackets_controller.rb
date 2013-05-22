@@ -1,5 +1,6 @@
 class BracketsController < ApplicationController
-  before_filter :get_all_bracket_info, :only => [:show, :edit]
+  before_filter :get_private_bracket_info, :only => [:edit]
+  before_filter :get_public_bracket_info, :only => [:show]
 
   # GET /brackets
   # GET /brackets.json
@@ -36,6 +37,7 @@ class BracketsController < ApplicationController
   # GET /brackets/1/edit
   def edit
     @allow_edit = true
+    authorize! :edit, @bracket
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @bracket }
@@ -48,9 +50,14 @@ class BracketsController < ApplicationController
     @bracket = Bracket.new(params[:bracket])
     bracket_teams = params[:bracket][:bracket_teams].split(/\r?\n/)
     bracket_teams_count = bracket_teams.count
-    Permission.create!(:user => current_user,
-                        :thing => @bracket,
-                        :action => "view")
+
+    permissions = ["view", "edit", "delete"]
+
+    permissions.each do |permission|
+      Permission.create!(:user => current_user,
+      :thing => @bracket,
+      :action => permission)
+    end
 
     respond_to do |format|
       if @bracket.save
@@ -111,30 +118,30 @@ class BracketsController < ApplicationController
         increment_value = -1
         matches.each do |match|
          if increment == true
-            increment_value += 1
-            increment = false
-          elsif increment == false
-            increment = true
-          end
-          match.next_match_id = matches[half_num_matches + increment_value].id
-          match.save
+          increment_value += 1
+          increment = false
+        elsif increment == false
+          increment = true
         end
-
-
-        format.html { redirect_to @bracket, notice: 'Bracket was successfully created.' }
-        format.json { render json: @bracket, status: :created, location: @bracket }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @bracket.errors, status: :unprocessable_entity }
+        match.next_match_id = matches[half_num_matches + increment_value].id
+        match.save
       end
+
+
+      format.html { redirect_to @bracket, notice: 'Bracket was successfully created.' }
+      format.json { render json: @bracket, status: :created, location: @bracket }
+    else
+      format.html { render action: "new" }
+      format.json { render json: @bracket.errors, status: :unprocessable_entity }
     end
   end
+end
 
   # PUT /brackets/1
   # PUT /brackets/1.json
   def update
     @bracket = Bracket.find(params[:id])
-
+    authorize! :update, @bracket
     respond_to do |format|
       if @bracket.update_attributes(params[:bracket])
         format.html { redirect_to edit_bracket_path(@bracket), notice: 'Bracket was successfully updated.' }
@@ -150,6 +157,7 @@ class BracketsController < ApplicationController
   # DELETE /brackets/1.json
   def destroy
     @bracket = Bracket.find(params[:id])
+    authorize! :delete, @bracket
     @bracket.destroy
 
     respond_to do |format|
@@ -164,17 +172,28 @@ class BracketsController < ApplicationController
 
   private
 
-  def get_all_bracket_info
+  def get_private_bracket_info
+    begin
+      @bracket = Bracket.viewable_by(current_user).find(params[:id])
+      matches = @bracket.matches
+      @matches_in_each_round = matches_in_each_round matches.count
+      @matches = get_matches_info_array matches
+    rescue ActiveRecord::RecordNotFound
+      flash[:alert] = "The project you were looking" +
+      " for could not be found."
+      redirect_to brackets_path
+    end
+  end
+
+  def get_public_bracket_info
     @bracket = Bracket.find(params[:id])
     matches = @bracket.matches
-    num_matches = matches.count
-    @matches_in_each_round = []
-    while num_matches > 1
-      num_matches = num_matches / 2
-      @matches_in_each_round << num_matches if num_matches > 0
-    end
+    @matches_in_each_round = matches_in_each_round matches.count
+    @matches = get_matches_info_array matches
+  end
 
-    @matches = matches.map do |match|
+  def get_matches_info_array matches
+    matches_array = matches.map do |match|
       team1_name = ""
       team2_name = ""
       team1_score = ""
@@ -203,5 +222,16 @@ class BracketsController < ApplicationController
         team2_edit_path: team2_edit_path
       }
     end
+
+    return matches_array
+  end
+
+  def matches_in_each_round num_matches
+    matches_in_each_round = []
+    while num_matches > 1
+      num_matches = num_matches / 2
+      matches_in_each_round << num_matches if num_matches > 0
+    end
+    return matches_in_each_round
   end
 end

@@ -3,10 +3,11 @@ class InfoController < ApplicationController
   end
 
   def about
-
   end
 
   def contact
+  end
 
+  def generator
   end
 end

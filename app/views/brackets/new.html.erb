@@ -1,5 +1,44 @@
-<h1>New bracket</h1>
 
-<%= render 'form' %>
+<div class="row-fluid">
+  <div class="span12">
+    <h1>New Bracket</h1>
+  </div>
+</div>
 
-<%= link_to 'Back', brackets_path %>
+<div class="row-fluid" style="width:1200px;">
+
+  <div style="width:220px; float:left; margin-right:20px;">
+    <%= form_for(@bracket) do |f| %>
+    <% if @bracket.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@bracket.errors.count, "error") %> prohibited this bracket from being saved:</h2>
+      <ul>
+        <% @bracket.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+    <% end %>
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+    <div class="field">
+      <%= f.label :bracket_teams, "Teams" %>
+      <%= f.text_area :bracket_teams, :rows => 32 %>
+    </div>
+    <div class="actions">
+      <%= f.submit :class => 'btn btn-success', :value => 'Save Bracket' %>
+    </div>
+    <% end %>
+  </div>
+
+  <div style="width:940px; float:left;">
+    <div>
+      <h2 id="bracket-name-box"></h2>
+    </div>
+    <div id="bracket-box" class="clearfix">
+    </div>
+  </div>
+
+</div> <!-- end row-fluid -->

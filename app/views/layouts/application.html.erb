@@ -14,8 +14,10 @@
       <a class="brand" href="/">Tournament</a>
       <div class="nav-collapse collapse">
         <ul class="nav">
-          <li><a href="/about">About</a></li>
-          <li><a href="/contact">Contact</a></li>
+          <% if user_signed_in? %>
+            <li><a href="/brackets">Brackets</a></li>
+            <li><a href="/brackets/new">New Bracket</a></li>
+          <% end %>
         </li>
       </ul>
       <ul class="nav pull-right">

@@ -1,5 +1,7 @@
 <div id="nav-options">
-  <%= link_to "Edit this bracket", edit_bracket_path, :class => "btn btn-primary" %>
+  <% if can? :edit, @bracket %>
+    <%= link_to "Edit this bracket", edit_bracket_path, :class => "btn btn-primary" %>
+  <% end %>
 </div>
 
 <h1> <%= @bracket.name %> </h1>

@@ -1,4 +1,6 @@
 class MatchesController < ApplicationController
+  before_filter :find_and_authorize_bracket
+
   # GET /matches
   # GET /matches.json
   def index
