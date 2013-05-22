@@ -21,15 +21,19 @@
       <ul class="nav pull-right">
         <% if user_signed_in? %>
         <li style="color:#fff;">
-          Signed in as <%= current_user.email %>
+          <div style="padding: 10px 15px 10px;">Signed in as <%= current_user.email %></div>
         </li>
         <li>
           <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
         </li>
-        <% end %>
+        <% else %>
         <li>
           <%= link_to "Sign up", new_user_registration_path %>
         </li>
+        <li>
+          <%= link_to "Log in", new_user_session_path %>
+        </li>
+        <% end %>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
