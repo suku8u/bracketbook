@@ -5,11 +5,18 @@ class Bracket < ActiveRecord::Base
 
   validates :name, :presence => true
 
+  has_many :permissions, :as => :thing
+
   def bracket_teams
     # virtual attribute so bracket teams text area not matched to db
   end
 
   def bracket_teams=(bracket_teams)
     # virtual attribute so bracket teams text area not matched to db
+  end
+
+  def self.viewable_by(user)
+    joins(:permissions).where(:permissions => { :action => "view",
+                                                :user_id => user.id })
   end
 end

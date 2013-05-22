@@ -4,7 +4,7 @@ class BracketsController < ApplicationController
   # GET /brackets
   # GET /brackets.json
   def index
-    @brackets = Bracket.all
+    @brackets = Bracket.viewable_by(current_user).all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -48,6 +48,9 @@ class BracketsController < ApplicationController
     @bracket = Bracket.new(params[:bracket])
     bracket_teams = params[:bracket][:bracket_teams].split(/\r?\n/)
     bracket_teams_count = bracket_teams.count
+    Permission.create!(:user => current_user,
+                        :thing => @bracket,
+                        :action => "view")
 
     respond_to do |format|
       if @bracket.save
