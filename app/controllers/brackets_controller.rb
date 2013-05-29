@@ -51,7 +51,7 @@ class BracketsController < ApplicationController
     bracket_teams = params[:bracket][:bracket_teams].split(/\r?\n/)
     bracket_teams_count = bracket_teams.count
 
-    permissions = ["view", "edit", "delete"]
+    permissions = ["view", "edit", "update", "delete"]
 
     permissions.each do |permission|
       Permission.create!(:user => current_user,
@@ -161,7 +161,7 @@ end
     @bracket.destroy
 
     respond_to do |format|
-      format.html { redirect_to brackets_url }
+      format.html { redirect_to brackets_url, notice: 'Bracket was successfully deleted.' }
       format.json { head :no_content }
     end
   end
