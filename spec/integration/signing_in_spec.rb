@@ -8,7 +8,7 @@ feature 'Signin in' do
 
   scenario 'Signing in via form' do
     visit '/'
-    click_link 'Log in'
+    click_link 'Sign in'
     fill_in 'Email', :with => 'user@example.com'
     fill_in 'Password', :with => 'password'
     click_button 'Sign in'
