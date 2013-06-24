@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:travisluong/static_blocks.git
+  remote: https://github.com/travisluong/static_blocks.git
   revision: 29163f0e458231999200ecd4fafa6ac360dce24b
   specs:
     static_blocks (0.0.2)
