@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Tournament</title>
+  <link href='http://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet' type='text/css'>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -11,20 +12,15 @@
  <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container-fluid">
-      <a class="brand" href="/">Tournament</a>
+      <a class="brand" href="/">Bracketbook</a>
       <div class="nav-collapse collapse">
-        <ul class="nav">
-          <% if user_signed_in? %>
-            <li><a href="/brackets">My Brackets</a></li>
-            <li><a href="/brackets/new">New Bracket</a></li>
-          <% end %>
-        </li>
-      </ul>
       <ul class="nav pull-right">
         <% if user_signed_in? %>
         <li style="color:#fff;">
           <div style="padding: 10px 15px 10px;">Signed in as <%= current_user.username %></div>
         </li>
+        <li><%= link_to "My Brackets", brackets_path %></li>
+        <li><%= link_to "New Bracket", new_bracket_path %></li>
         <li>
           <%= link_to "Edit profile", edit_user_registration_path %>
         </li>
@@ -64,7 +60,7 @@
   <hr>
 
   <footer>
-    <p>&copy; Team6 2013</p>
+    <p><%= raw s 'copyright' %></p>
   </footer>
 
 </div> <!-- /container -->

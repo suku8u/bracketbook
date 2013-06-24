@@ -1,5 +1,3 @@
-@import 'bootstrap';
-
 body {
   padding-top: 60px;
   padding-bottom: 40px;
@@ -25,4 +23,14 @@ body {
 .container-fluid {
   width: 1200px;
   margin: auto;
+}
+
+hr {
+  border: 2px solid #000;
+}
+
+.navbar a.brand {
+  font-family: "Aldrich";
+  text-transform: lowercase;
+  color: #fff;
 }

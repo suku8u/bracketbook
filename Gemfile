@@ -7,6 +7,7 @@ gem 'devise'
 gem 'cancan'
 gem 'omniauth-twitter'
 gem 'figaro'
+gem 'static_blocks'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

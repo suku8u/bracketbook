@@ -1,3 +1,11 @@
 // Place all the styles related to the info controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.home-features, .hero-unit {
+  a {
+    @include buttonBackground($startColor: #333, $endColor: #000, $textColor: #fff, $textShadow: 0 -1px 0 rgba(0,0,0,.25));
+    padding: 10px;
+    cursor: pointer;
+  }
+}

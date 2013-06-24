@@ -13,6 +13,8 @@ Tournament::Application.routes.draw do
     get page, controller: "info", action: page
   end
 
+  mount StaticBlocks::Engine => "/static_blocks_admin"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

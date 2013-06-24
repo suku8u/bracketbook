@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130611005710) do
+ActiveRecord::Schema.define(:version => 20130624190917) do
 
   create_table "brackets", :force => true do |t|
     t.string   "name"
@@ -38,6 +38,25 @@ ActiveRecord::Schema.define(:version => 20130611005710) do
     t.integer  "thing_id"
     t.string   "thing_type"
     t.string   "action"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "static_blocks_static_block_translations", :force => true do |t|
+    t.integer  "static_blocks_static_block_id"
+    t.string   "locale"
+    t.text     "content"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  add_index "static_blocks_static_block_translations", ["locale"], :name => "index_static_blocks_static_block_translations_on_locale"
+  add_index "static_blocks_static_block_translations", ["static_blocks_static_block_id"], :name => "index_bc40576269460a507bac1fc29dc0b04705279cb3"
+
+  create_table "static_blocks_static_blocks", :force => true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.string   "status"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
