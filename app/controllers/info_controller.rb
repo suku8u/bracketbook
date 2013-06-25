@@ -12,6 +12,6 @@ class InfoController < ApplicationController
   end
 
   def tournaments
-    @brackets = Bracket.includes(:user).all
+    @brackets = Bracket.includes(:user).page(params[:page]).per_page(25)
   end
 end

@@ -5,9 +5,11 @@
     <th>Bracket</th>
   </tr>
 
-<% @user.brackets.each do |bracket| %>
+<% @brackets.each do |bracket| %>
   <tr>
     <td><%= link_to bracket.name, bracket %></td>
   </tr>
 <% end %>
 </table>
+
+<%= will_paginate(@brackets) %>

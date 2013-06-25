@@ -5,7 +5,7 @@ class BracketsController < ApplicationController
   # GET /brackets
   # GET /brackets.json
   def index
-    @brackets = Bracket.viewable_by(current_user).all
+    @brackets = Bracket.viewable_by(current_user).page(params[:page]).per_page(25)
 
     respond_to do |format|
       format.html # index.html.erb
