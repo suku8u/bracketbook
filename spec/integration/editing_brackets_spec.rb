@@ -14,7 +14,7 @@ feature 'Editing Brackets' do
 
   scenario "Can update the name" do
     fill_in 'bracket_name', :with => "The Sonics"
-    click_button 'Update bracket name'
+    click_button 'Update bracket'
     page.should have_selector('h1', :text => "The Sonics")
   end
 

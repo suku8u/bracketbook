@@ -1,6 +1,6 @@
 class Bracket < ActiveRecord::Base
   before_save :set_uuid
-  attr_accessible :name, :bracket_teams
+  attr_accessible :name, :bracket_teams, :show_in_tournaments, :show_in_profile
   has_many :teams, :dependent => :delete_all, :order => 'id ASC'
   has_many :matches, :dependent => :delete_all, :order => 'id ASC'
   belongs_to :user
@@ -10,6 +10,9 @@ class Bracket < ActiveRecord::Base
   has_many :permissions, :as => :thing
   extend FriendlyId
   friendly_id :slug, use: :slugged
+
+  scope :show_in_tournaments, where(:show_in_tournaments => true)
+  scope :show_in_profile, where(:show_in_profile => true)
 
   def set_uuid
     self.slug = SecureRandom.uuid[0..7] if self.slug.nil?

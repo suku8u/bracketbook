@@ -2,7 +2,7 @@
   <%= link_to "Show bracket", bracket_path, :class => "btn btn-primary" %> <span class="pull-right label label-inverse"><%= bracket_url %></span>
 </div>
 
-<%= form_for @bracket, :html => {:class => "form-horizontal well"} do |f| %>
+<%= form_for @bracket, :html => {:class => "well"} do |f| %>
 <% if @bracket.errors.any? %>
 <div id="error_explanation">
   <h2><%= pluralize(@bracket.errors.count, "error") %> prohibited this team from being saved:</h2>
@@ -14,8 +14,19 @@
   </ul>
 </div>
 <% end %>
+<%= f.label :name %>
 <%= f.text_field :name %>
-<%= f.submit :class => "btn btn-success", :value => "Update bracket name" %>
+
+<label for="public" class="checkbox">
+  <%= f.check_box :show_in_tournaments %> Show in public tournament listing.
+</label>
+
+<label for="show_in_profile" class="checkbox">
+  <%= f.check_box :show_in_profile %> Show in profile.
+</label>
+
+<%= f.submit :class => "btn btn-success", :value => "Update bracket" %>
+
 <% end %>
 
 <h1> <%= @bracket.name %> </h1>

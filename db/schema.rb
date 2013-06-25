@@ -11,14 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130625184658) do
+ActiveRecord::Schema.define(:version => 20130625205111) do
 
   create_table "brackets", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.string   "slug"
     t.integer  "user_id"
+    t.boolean  "show_in_tournaments", :default => true
+    t.boolean  "show_in_profile",     :default => true
   end
 
   add_index "brackets", ["slug"], :name => "index_brackets_on_slug"
