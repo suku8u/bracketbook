@@ -49,93 +49,18 @@ class BracketsController < ApplicationController
   def create
     @bracket = Bracket.new(params[:bracket])
     bracket_teams = params[:bracket][:bracket_teams].split(/\r?\n/)
-    bracket_teams_count = bracket_teams.count
-
-    permissions = ["view", "edit", "update", "delete"]
-
-    permissions.each do |permission|
-      Permission.create!(:user => current_user,
-      :thing => @bracket,
-      :action => permission)
-    end
 
     respond_to do |format|
-      if @bracket.save
-        # calculate correct number of matches for this bracket
-        case bracket_teams_count
-        when 1..4
-          num_matches = 4
-        when 5..8
-          num_matches = 8
-        when 8..16
-          num_matches = 16
-        when 16..32
-          num_matches = 32
-        else
-          num_matches = 0
-        end
-
-        # calculate difference of num_matches and bracket_teams_count
-        difference = num_matches - bracket_teams_count
-
-        # fill in the rest of the missing spots with a Bye
-        difference.times { bracket_teams << "Bye" }
-
-        # save teams to bracket
-        bracket_teams.each do |t|
-          team = @bracket.teams.build
-          if t.blank?
-            team.name = "Bye"
-          else
-            team.name = t
-          end
-          team.save
-        end
-
-        # create and save matches with position number
-        bracket_position_counter = 0
-        num_matches.times do
-          bracket_position_counter += 1
-          match = @bracket.matches.build
-          match.bracket_position = bracket_position_counter
-          match.save
-        end
-
-        matches = @bracket.matches
-
-        # insert two teams into each match
-        counter = 0
-        @bracket.teams.each_slice(2) do |two_teams|
-          matches[counter].team1_id = two_teams[0].id
-          matches[counter].team2_id = two_teams[1].id
-          matches[counter].save
-          counter += 1
-        end
-
-        # create next match connections
-        half_num_matches = num_matches / 2
-        increment = true
-        increment_value = -1
-        matches.each do |match|
-         if increment == true
-          increment_value += 1
-          increment = false
-        elsif increment == false
-          increment = true
-        end
-        match.next_match_id = matches[half_num_matches + increment_value].id
-        match.save
+      if Bracket.create_bracket @bracket, bracket_teams, current_user
+        format.html { redirect_to @bracket, notice: 'Bracket was successfully created.' }
+        format.json { render json: @bracket, status: :created, location: @bracket }
+      else
+        flash[:error] = "There was an error saving your bracket. Please try again."
+        format.html { render action: "new" }
+        format.json { render json: @bracket.errors, status: :unprocessable_entity }
       end
-
-
-      format.html { redirect_to @bracket, notice: 'Bracket was successfully created.' }
-      format.json { render json: @bracket, status: :created, location: @bracket }
-    else
-      format.html { render action: "new" }
-      format.json { render json: @bracket.errors, status: :unprocessable_entity }
     end
   end
-end
 
   # PUT /brackets/1
   # PUT /brackets/1.json
@@ -179,7 +104,7 @@ end
       @matches_in_each_round = matches_in_each_round matches.count
       @matches = get_matches_info_array matches
     rescue ActiveRecord::RecordNotFound
-      flash[:alert] = "The project you were looking" +
+      flash[:alert] = "The bracket you were looking" +
       " for could not be found."
       redirect_to brackets_path
     end
