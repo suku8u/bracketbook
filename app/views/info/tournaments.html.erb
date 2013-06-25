@@ -1,0 +1,15 @@
+<h1>All Tournaments</h1>
+
+<table class="table table-striped">
+  <tr>
+    <th>Bracket</th>
+    <th>User</th>
+  </tr>
+
+<% @brackets.each do |bracket| %>
+  <tr>
+    <td><%= link_to bracket.name, bracket %></td>
+    <td><%= bracket.user.username %></td>
+  </tr>
+<% end %>
+</table>

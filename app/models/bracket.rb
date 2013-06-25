@@ -3,6 +3,7 @@ class Bracket < ActiveRecord::Base
   attr_accessible :name, :bracket_teams
   has_many :teams, :dependent => :delete_all, :order => 'id ASC'
   has_many :matches, :dependent => :delete_all, :order => 'id ASC'
+  belongs_to :user
 
   validates :name, :presence => true
 
@@ -44,6 +45,9 @@ class Bracket < ActiveRecord::Base
 
     begin
       ActiveRecord::Base.transaction do
+
+        # set the user id for this bracket
+        bracket.user_id = current_user.id
 
         # save bracket
         bracket.save

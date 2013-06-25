@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
 
   has_many :permissions
+  has_many :brackets
 
   validates :username, :uniqueness => { :case_sensitive => false }
 
