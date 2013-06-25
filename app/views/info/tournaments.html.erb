@@ -9,7 +9,7 @@
 <% @brackets.each do |bracket| %>
   <tr>
     <td><%= link_to bracket.name, bracket %></td>
-    <td><%= bracket.user.username %></td>
+    <td><%= link_to bracket.user.username, profile_path(bracket.user.username) %></td>
   </tr>
 <% end %>
 </table>

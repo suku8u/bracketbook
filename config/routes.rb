@@ -4,6 +4,8 @@ Tournament::Application.routes.draw do
 
   root to: 'info#home'
 
+  get 'users/:id', :to => 'users#show', :as => 'profile'
+
   resources :brackets do
     resources :teams
     resources :matches

@@ -1,0 +1,13 @@
+<h1>User Profile: <%= @user.username %></h1>
+
+<table class="table table-striped">
+  <tr>
+    <th>Bracket</th>
+  </tr>
+
+<% @user.brackets.each do |bracket| %>
+  <tr>
+    <td><%= link_to bracket.name, bracket %></td>
+  </tr>
+<% end %>
+</table>
