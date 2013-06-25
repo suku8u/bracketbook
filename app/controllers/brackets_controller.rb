@@ -99,10 +99,11 @@ class BracketsController < ApplicationController
 
   def get_private_bracket_info
     begin
-      @bracket = Bracket.viewable_by(current_user).find(params[:id])
+      @bracket = Bracket.includes(:matches,:teams).viewable_by(current_user).find(params[:id])
       matches = @bracket.matches
+      teams = @bracket.teams
       @matches_in_each_round = matches_in_each_round matches.count
-      @matches = get_matches_info_array matches
+      @matches = get_matches_info_array @bracket, matches, teams
     rescue ActiveRecord::RecordNotFound
       flash[:alert] = "The bracket you were looking" +
       " for could not be found."
@@ -111,13 +112,14 @@ class BracketsController < ApplicationController
   end
 
   def get_public_bracket_info
-    @bracket = Bracket.find(params[:id])
+    @bracket = Bracket.includes(:matches, :teams).find(params[:id])
     matches = @bracket.matches
+    teams = @bracket.teams
     @matches_in_each_round = matches_in_each_round matches.count
-    @matches = get_matches_info_array matches
+    @matches = get_matches_info_array @bracket, matches, teams
   end
 
-  def get_matches_info_array matches
+  def get_matches_info_array bracket, matches, teams
     matches_array = matches.map do |match|
       team1_name = ""
       team2_name = ""
@@ -127,15 +129,15 @@ class BracketsController < ApplicationController
       team1_edit_path = ""
       team2_edit_path = ""
 
-      team1 = Team.find_by_id(match.team1_id)
-      team2 = Team.find_by_id(match.team2_id)
+      team1 = find_team_in_array match.team1_id, teams
+      team2 = find_team_in_array match.team2_id, teams
       team1_name = team1.name.truncate(18) unless match.team1_id.nil?
       team2_name = team2.name.truncate(18) unless match.team2_id.nil?
       team1_score = match.team1_score unless match.team1_score.nil?
       team2_score = match.team2_score unless match.team2_score.nil?
-      match_edit_path = edit_bracket_match_path(match.bracket, match) unless match.team1_id.nil? || match.team2_id.nil?
-      team1_edit_path = edit_bracket_team_path(team1.bracket, team1) unless team1.nil?
-      team2_edit_path = edit_bracket_team_path(team2.bracket, team2) unless team2.nil?
+      match_edit_path = edit_bracket_match_path(bracket, match) unless match.team1_id.nil? || match.team2_id.nil?
+      team1_edit_path = edit_bracket_team_path(bracket, team1) unless team1.nil?
+      team2_edit_path = edit_bracket_team_path(bracket, team2) unless team2.nil?
 
       {
         team1_name: team1_name,
@@ -158,5 +160,11 @@ class BracketsController < ApplicationController
       matches_in_each_round << num_matches if num_matches > 0
     end
     return matches_in_each_round
+  end
+
+  def find_team_in_array team_id, team_array
+    team_array.each do |t|
+      return t if t.id == team_id
+    end
   end
 end
