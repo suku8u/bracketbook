@@ -1,14 +1,18 @@
 class Bracket < ActiveRecord::Base
+  before_save :set_uuid
   attr_accessible :name, :bracket_teams
   has_many :teams, :dependent => :delete_all, :order => 'id ASC'
   has_many :matches, :dependent => :delete_all, :order => 'id ASC'
 
-  validates :name, :presence => true, :uniqueness => true
-  validates :slug, :presence => true, :uniqueness => true
+  validates :name, :presence => true
 
   has_many :permissions, :as => :thing
   extend FriendlyId
-  friendly_id :name, use: :slugged
+  friendly_id :slug, use: :slugged
+
+  def set_uuid
+    self.slug = SecureRandom.uuid[0..7] if self.slug.nil?
+  end
 
   def bracket_teams
     # virtual attribute so bracket teams text area not matched to db
