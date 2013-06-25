@@ -87,6 +87,7 @@ GEM
     figaro (0.6.3)
       bundler (~> 1.0)
       rails (>= 3, < 5)
+    friendly_id (4.0.9)
     globalize3 (0.3.0)
       activemodel (>= 3.0.0)
       activerecord (>= 3.0.0)
@@ -229,6 +230,7 @@ DEPENDENCIES
   devise
   factory_girl (= 2.6.4)
   figaro
+  friendly_id
   hirb
   jquery-rails
   omniauth-twitter

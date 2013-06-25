@@ -1,3 +1,13 @@
+<% if @bracket.errors.any? %>
+<div id="error_explanation" class="alert alert-error">
+  <h2><%= pluralize(@bracket.errors.count, "error") %> prohibited this bracket from being saved:</h2>
+  <ul>
+    <% @bracket.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
 
 <div class="row-fluid">
   <div class="span12">
@@ -9,16 +19,6 @@
 
   <div style="width:220px; float:left; margin-right:20px;">
     <%= form_for(@bracket) do |f| %>
-    <% if @bracket.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@bracket.errors.count, "error") %> prohibited this bracket from being saved:</h2>
-      <ul>
-        <% @bracket.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-    <% end %>
     <div class="field">
       <%= f.label :name %>
       <%= f.text_field :name %>

@@ -3,9 +3,12 @@ class Bracket < ActiveRecord::Base
   has_many :teams, :dependent => :delete_all, :order => 'id ASC'
   has_many :matches, :dependent => :delete_all, :order => 'id ASC'
 
-  validates :name, :presence => true
+  validates :name, :presence => true, :uniqueness => true
+  validates :slug, :presence => true, :uniqueness => true
 
   has_many :permissions, :as => :thing
+  extend FriendlyId
+  friendly_id :name, use: :slugged
 
   def bracket_teams
     # virtual attribute so bracket teams text area not matched to db
@@ -31,8 +34,16 @@ class Bracket < ActiveRecord::Base
       return false
     end
 
+    if bracket.invalid?
+      return false
+    end
+
     begin
       ActiveRecord::Base.transaction do
+
+        # save bracket
+        bracket.save
+
         # get the number of teams
         bracket_teams_count = bracket_teams.count
 

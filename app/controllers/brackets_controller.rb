@@ -1,5 +1,5 @@
 class BracketsController < ApplicationController
-  before_filter :get_private_bracket_info, :only => [:edit]
+  before_filter :get_private_bracket_info, :only => [:edit, :update]
   before_filter :get_public_bracket_info, :only => [:show]
 
   # GET /brackets

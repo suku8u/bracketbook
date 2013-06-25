@@ -8,6 +8,7 @@ gem 'cancan'
 gem 'omniauth-twitter'
 gem 'figaro'
 gem 'static_blocks', :git => 'https://github.com/travisluong/static_blocks.git'
+gem 'friendly_id'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
