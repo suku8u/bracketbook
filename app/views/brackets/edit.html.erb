@@ -1,5 +1,5 @@
 <div id="nav-options">
-  <%= link_to "Show bracket", bracket_path, :class => "btn btn-primary" %>
+  <%= link_to "Show bracket", bracket_path, :class => "btn btn-primary" %> <span class="pull-right label label-inverse"><%= bracket_url %></span>
 </div>
 
 <%= form_for @bracket, :html => {:class => "form-horizontal well"} do |f| %>
