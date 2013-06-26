@@ -4,8 +4,13 @@
 
 .home-features, .hero-unit {
   a {
-    @include buttonBackground($startColor: #333, $endColor: #000, $textColor: #fff, $textShadow: 0 -1px 0 rgba(0,0,0,.25));
+    @include buttonBackground($startColor: #666, $endColor: #000, $textColor: #fff, $textShadow: 0 -1px 0 rgba(0,0,0,.25));
+    @include border-radius(5px);
     padding: 10px;
     cursor: pointer;
+    &:hover {
+      text-decoration: none;
+      @include buttonBackground($startColor: #333, $endColor: #000, $textColor: #fff, $textShadow: 0 -1px 0 rgba(0,0,0,.25));
+    }
   }
 }

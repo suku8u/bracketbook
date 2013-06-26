@@ -29,11 +29,15 @@ body {
 }
 
 hr {
-  border: 2px solid #000;
+  border: 1px solid #000;
 }
 
 .navbar a.brand {
   font-family: "Aldrich";
   text-transform: lowercase;
   color: #fff;
+}
+
+.btn-primary {
+  @include buttonBackground($startColor: #666, $endColor: #000, $textColor: #fff, $textShadow: 0 -1px 0 rgba(0,0,0,.25));
 }
