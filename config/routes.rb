@@ -11,11 +11,14 @@ Tournament::Application.routes.draw do
     resources :matches
   end
 
-  %w[about contact generator tournaments].each do |page|
+  %w[about generator tournaments].each do |page|
     get page, controller: "info", action: page
   end
 
   mount StaticBlocks::Engine => "/static_blocks_admin"
+
+  match 'contact' => 'contact#new', :as => 'contact', :via => :get
+  match 'contact' => 'contact#create', :as => 'contact', :via => :post
 
   match '/*paths' => redirect('/')
 
