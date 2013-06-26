@@ -8,8 +8,13 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :username
   # attr_accessible :title, :body
 
-  has_many :permissions
-  has_many :brackets
+  has_many :permissions, :dependent => :delete_all
+
+  # :destroy instantiates and destroys each bracket
+  # so the bracket :delete_all dependencies will cascade
+  # and delete associated matches and teams
+  # whenever a user is destroyed
+  has_many :brackets, :dependent => :destroy
 
   validates :username, :uniqueness => { :case_sensitive => false }
 
