@@ -1,6 +1,6 @@
 class NotificationsMailer < ActionMailer::Base
 
-  default :from => "bracketbook contact form"
+  default :from => "contactform@bracketbook.com"
   default :to => "travis@travisluong.com"
 
   def new_message(message)
