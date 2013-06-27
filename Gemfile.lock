@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/travisluong/static_blocks.git
-  revision: c651db7d24226430f0d729118e69137603ae0907
+  revision: 3725608903b8dd5d86a4da341a99922d60c3be86
   specs:
-    static_blocks (0.1.0)
+    static_blocks (0.1.1)
       bootstrap-kaminari-views
       bootstrap-sass
       bootstrap-wysihtml5-rails
