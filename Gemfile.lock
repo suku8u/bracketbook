@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/travisluong/static_blocks.git
-  revision: 1f902dc0ae3f87a20dce500f3cd6c8ad63c7a58d
+  revision: c651db7d24226430f0d729118e69137603ae0907
   specs:
     static_blocks (0.1.0)
       bootstrap-kaminari-views
