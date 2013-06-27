@@ -11,6 +11,7 @@ gem 'static_blocks', :git => 'https://github.com/travisluong/static_blocks.git'
 gem 'friendly_id'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
+gem 'newrelic_rpm'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

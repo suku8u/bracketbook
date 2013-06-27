@@ -113,6 +113,7 @@ GEM
     method_source (0.8.1)
     mime-types (1.23)
     multi_json (1.7.7)
+    newrelic_rpm (3.6.0.78)
     nokogiri (1.5.9)
     oauth (0.4.7)
     omniauth (1.1.4)
@@ -237,6 +238,7 @@ DEPENDENCIES
   friendly_id
   hirb
   jquery-rails
+  newrelic_rpm
   omniauth-twitter
   pg
   pry
