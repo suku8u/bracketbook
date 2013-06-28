@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130625205111) do
+ActiveRecord::Schema.define(:version => 20130628041444) do
 
   create_table "brackets", :force => true do |t|
     t.string   "name"
@@ -40,6 +40,11 @@ ActiveRecord::Schema.define(:version => 20130625205111) do
 
   add_index "matches", ["bracket_id"], :name => "index_matches_on_bracket_id"
 
+  create_table "messages", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "permissions", :force => true do |t|
     t.integer  "user_id"
     t.integer  "thing_id"
@@ -49,18 +54,18 @@ ActiveRecord::Schema.define(:version => 20130625205111) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "static_blocks_static_block_translations", :force => true do |t|
-    t.integer  "static_blocks_static_block_id"
+  create_table "static_blocks_snippet_translations", :force => true do |t|
+    t.integer  "static_blocks_snippet_id"
     t.string   "locale"
     t.text     "content"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
-  add_index "static_blocks_static_block_translations", ["locale"], :name => "index_static_blocks_static_block_translations_on_locale"
-  add_index "static_blocks_static_block_translations", ["static_blocks_static_block_id"], :name => "index_bc40576269460a507bac1fc29dc0b04705279cb3"
+  add_index "static_blocks_snippet_translations", ["locale"], :name => "index_static_blocks_snippet_translations_on_locale"
+  add_index "static_blocks_snippet_translations", ["static_blocks_snippet_id"], :name => "index_065ea3d746be618a83324e6f6ef82e2f6dc43e03"
 
-  create_table "static_blocks_static_blocks", :force => true do |t|
+  create_table "static_blocks_snippets", :force => true do |t|
     t.string   "title"
     t.text     "content"
     t.string   "status"

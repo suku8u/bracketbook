@@ -15,7 +15,7 @@ Tournament::Application.routes.draw do
     get page, controller: "info", action: page
   end
 
-  mount StaticBlocks::Engine => "/static_blocks_admin"
+  mount StaticBlocks::Engine => "/static_blocks"
 
   match 'contact' => 'contact#new', :as => 'contact', :via => :get
   match 'contact' => 'contact#create', :as => 'contact', :via => :post
